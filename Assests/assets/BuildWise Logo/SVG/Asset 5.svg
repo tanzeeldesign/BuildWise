@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 562.42 771.27">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: url(#linear-gradient-4);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 26px;
+      }
+
+      .cls-7 {
+        fill: #355937;
+        font-family: SFProText-Medium, 'SF Pro Text';
+        font-size: 135.49px;
+        font-weight: 500;
+        letter-spacing: -.08em;
+      }
+
+      .cls-2 {
+        stroke: url(#linear-gradient-3);
+      }
+
+      .cls-3 {
+        stroke: url(#linear-gradient-5);
+      }
+
+      .cls-4 {
+        stroke: url(#linear-gradient-2);
+      }
+
+      .cls-5 {
+        stroke: url(#linear-gradient);
+      }
+
+      .cls-6 {
+        stroke: url(#linear-gradient-6);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="-857.51" y1="-1213.88" x2="-502.3" y2="-1590.09" gradientTransform="translate(1264.3741 -1705.7876) scale(1.38 -1.38)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4b7a4e"/>
+      <stop offset=".55" stop-color="#365a38"/>
+      <stop offset="1" stop-color="#25402a"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-859.47" y1="-1219.37" x2="-508.25" y2="-1591.35" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="-727.52" y1="-1103.32" x2="-383.62" y2="-1467.55" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="-997.01" y1="-1345.61" x2="-640.61" y2="-1723.08" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-5" x1="-874.73" y1="-1244.3" x2="-522.71" y2="-1617.12" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-6" x1="-789.5" y1="-1234.13" x2="-498.14" y2="-1542.7" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Layer_2-2" data-name="Layer 2">
+    <g>
+      <g>
+        <path class="cls-5" d="M41.51,179.43L281.21,17.97l235.98,161.46"/>
+        <path class="cls-4" d="M119.75,191.85l161.46-106.81,161.46,106.81"/>
+        <path class="cls-2" d="M435.22,75.1V13h79.49v104.33"/>
+        <path class="cls-1" d="M25.36,215.45c134.14,11.18,260.82,70.79,293.11,167.67,17.39,57.13-7.45,89.42-49.68,111.78-64.58,32.29-156.49,44.71-243.43,47.2V215.45Z"/>
+        <path class="cls-3" d="M529.61,215.45v326.65h-250.88"/>
+        <path class="cls-6" d="M529.61,215.45l-183.82,120.47"/>
+      </g>
+      <text class="cls-7" transform="translate(0 707.56)"><tspan x="0" y="0">BuildWise</tspan></text>
+    </g>
+  </g>
+</svg>

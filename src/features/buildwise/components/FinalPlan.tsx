@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { downloadPlanText, sharePlanText } from "../recommendations";
 import type { BuiltPlan } from "../types";
+import { Logo } from "./Logo";
 import { ScreenHeader } from "./ScreenHeader";
 
 type FinalPlanProps = {
@@ -32,9 +33,7 @@ export function FinalPlan({ plan, onBack, onDisclaimer }: FinalPlanProps) {
     <main className="bw-page fade-in bg-foreground text-background">
       <ScreenHeader title="Your plan" onBack={onBack} inverse />
       <section className="plan-grid flex-1 bw-pad-x py-8">
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-background/55">
-          BuildWise
-        </p>
+        <Logo variant="mark" size="sm" className="brightness-0 invert opacity-85" />
         <h1 className="mt-4 text-balance text-[32px] font-bold leading-[1.15] tracking-tight">
           Your smarter home starts here.
         </h1>

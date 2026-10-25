@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Leaf } from "lucide-react";
+import { Logo } from "./Logo";
 
 type SplashProps = {
   onContinue: () => void;
@@ -14,11 +14,10 @@ export function Splash({ onContinue }: SplashProps) {
   return (
     <main className="bw-page plan-grid items-center justify-center px-6">
       <div className="reveal-up flex flex-col items-center text-center">
-        <span className="grid size-16 place-items-center rounded-2xl border border-primary/40 bg-card text-primary shadow-sm">
-          <Leaf className="size-7" strokeWidth={1.75} />
-        </span>
-        <h1 className="mt-7 text-[2.35rem] font-semibold tracking-tight">BuildWise</h1>
-        <p className="bw-eyebrow mt-4">Smarter homes for Pakistan</p>
+        <Logo className="size-[140px]" />
+        <p className="mt-3 text-[15px] font-semibold leading-snug tracking-[0.04em] text-foreground">
+          Smarter Homes For Pakistan
+        </p>
       </div>
     </main>
   );

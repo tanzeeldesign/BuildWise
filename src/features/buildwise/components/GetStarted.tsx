@@ -1,6 +1,7 @@
-import { ArrowRight, Leaf } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import homeImage from "@/assets/buildwise-home.jpg";
+import { Logo } from "./Logo";
 
 type GetStartedProps = {
   onLetsBuild: () => void;
@@ -21,9 +22,7 @@ export function GetStarted({ onLetsBuild, onSignIn }: GetStartedProps) {
 
       <div className="bw-pad-x flex flex-1 flex-col pb-10 pt-1">
         <div className="flex items-center gap-2.5">
-          <span className="grid size-9 place-items-center rounded-xl border border-primary/35 bg-card text-primary shadow-sm">
-            <Leaf className="size-4" strokeWidth={2} />
-          </span>
+          <Logo variant="mark" size="sm" decorative />
           <span className="text-[17px] font-bold tracking-tight">BuildWise</span>
         </div>
 

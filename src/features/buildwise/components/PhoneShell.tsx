@@ -28,7 +28,7 @@ export function PhoneShell({
           {gridBackground && (
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 z-0 opacity-80"
+              className="pointer-events-none absolute inset-0 z-0 opacity-40"
             >
               <img
                 src={gridImage}
