@@ -257,7 +257,7 @@ Instead of displaying a boring grid of identical cards, create a premium editori
 
 Header:
 
-Good morning, Sarah.
+Good morning, Fizza.
 
 Your home plan is taking shape.
 

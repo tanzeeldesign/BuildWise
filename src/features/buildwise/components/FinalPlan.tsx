@@ -30,27 +30,23 @@ export function FinalPlan({ plan, onBack, onDisclaimer }: FinalPlanProps) {
   };
 
   return (
-    <main className="bw-page fade-in bg-foreground text-background">
-      <ScreenHeader title="Your plan" onBack={onBack} inverse />
+    <main className="bw-page fade-in">
+      <ScreenHeader title="Your plan" onBack={onBack} />
       <section className="plan-grid flex-1 bw-pad-x py-8">
-        <Logo variant="mark" size="sm" className="brightness-0 invert opacity-85" />
-        <h1 className="mt-4 text-balance text-[32px] font-bold leading-[1.15] tracking-tight">
-          Your smarter home starts here.
-        </h1>
-        <p className="mt-4 text-sm leading-snug text-background/60">
-          A planning guide based on your priorities.
-        </p>
+        <Logo variant="mark" size="sm" className="opacity-85" />
+        <h1 className="bw-title mt-4">Your smarter home starts here.</h1>
+        <p className="bw-body mt-4">A planning guide based on your priorities.</p>
         <div className="mt-10">
-          <p className="text-sm text-background/60">
+          <p className="text-sm text-muted-foreground">
             {plan.discussList.length} topics to discuss
           </p>
-          <div className="mt-4 overflow-hidden rounded-2xl border border-background/15 bg-background/5">
+          <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             {plan.discussList.map((label, i) => (
               <div
                 key={label}
-                className="flex items-center gap-4 border-b border-background/15 px-4 py-5 last:border-b-0"
+                className="flex items-center gap-4 border-b border-border px-4 py-5 last:border-b-0"
               >
-                <span className="w-8 shrink-0 text-xs tabular-nums text-background/45">
+                <span className="w-8 shrink-0 text-xs tabular-nums text-muted-foreground">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h2 className="text-xl font-semibold tracking-tight">{label}</h2>
@@ -59,28 +55,23 @@ export function FinalPlan({ plan, onBack, onDisclaimer }: FinalPlanProps) {
           </div>
         </div>
         <div className="bw-cta mt-10">
-          <Button variant="secondary" size="lg" className="w-full" onClick={onShare}>
+          <Button size="lg" className="w-full" onClick={onShare}>
             Share with architect <ArrowRight />
           </Button>
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full text-background hover:bg-background/10 hover:text-background"
-            onClick={onSave}
-          >
+          <Button variant="ghost" size="lg" className="w-full" onClick={onSave}>
             Save plan
           </Button>
           <Button
             variant="ghost"
             size="lg"
-            className="w-full text-background/70 hover:bg-background/10 hover:text-background"
+            className="w-full text-muted-foreground"
             onClick={onDisclaimer}
           >
             Disclaimer
           </Button>
         </div>
         {status && (
-          <p className="mt-4 text-sm text-background/70" role="status" aria-live="polite">
+          <p className="mt-4 text-sm text-muted-foreground" role="status" aria-live="polite">
             {status}
           </p>
         )}

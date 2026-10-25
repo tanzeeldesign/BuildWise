@@ -61,9 +61,7 @@ import { TOTAL_STEPS } from "@/features/buildwise/questions";
 function initialView(): View {
   if (typeof window === "undefined") return "splash";
   const session = loadSession();
-  if (session) {
-    return loadSubscription(session.email) ? "home" : "choose-plan";
-  }
+  if (session) return "home";
   if (splashSeenThisSession()) return "get-started";
   return "splash";
 }
@@ -137,7 +135,7 @@ function BuildWise() {
     return s ? loadSubscription(s.email) : null;
   });
   const [planChooserMode, setPlanChooserMode] = useState<"onboarding" | "settings">(
-    "onboarding",
+    "settings",
   );
 
   const updateStore = useCallback((recipe: (prev: PlansStore) => PlansStore) => {
@@ -284,42 +282,39 @@ function BuildWise() {
   );
 
   const openPlanChooser = useCallback(
-    (mode: "onboarding" | "settings", from: Tab = "profile") => {
-      setPlanChooserMode(mode);
-      if (mode === "settings") {
-        openStack("choose-plan", from);
-      } else {
-        go("choose-plan");
-      }
+    (from: Tab = "profile") => {
+      setPlanChooserMode("settings");
+      openStack("choose-plan", from);
     },
-    [go, openStack],
+    [openStack],
   );
 
-  const applySubscription = useCallback(
+  const selectTier = useCallback(
     (tierId: SubscriptionId) => {
       if (!session) return;
       const record = saveSubscription(session.email, tierId);
       setSubscription(record);
+    },
+    [session],
+  );
+
+  const applySubscription = useCallback(
+    (tierId: SubscriptionId) => {
+      selectTier(tierId);
       if (planChooserMode === "settings") {
         closeStack();
       } else {
         go("home");
       }
     },
-    [closeStack, go, planChooserMode, session],
+    [closeStack, go, planChooserMode, selectTier],
   );
 
   const onAuthSuccess = useCallback(
     (next: Session) => {
       setSession(next);
-      const existing = loadSubscription(next.email);
-      setSubscription(existing);
-      if (existing) {
-        go("home");
-      } else {
-        setPlanChooserMode("onboarding");
-        go("choose-plan");
-      }
+      setSubscription(loadSubscription(next.email));
+      go("home");
     },
     [go],
   );
@@ -457,11 +452,13 @@ function BuildWise() {
         plans={store.plans}
         activePlan={activePlan}
         built={built}
+        subscription={subscription}
         onOpenPlan={openPlanDetail}
         onBackToList={() => {
           setPlanMode("list");
           requestAnimationFrame(scrollTop);
         }}
+        onSelectTier={selectTier}
         onStartNewPlan={(name) => startNewPlan("plan", name)}
         onContinuePlan={(id) => continuePlan(id, "plan")}
         onEditAnswers={(id) => editPlanAnswers(id, "plan")}
@@ -475,7 +472,7 @@ function BuildWise() {
       <Profile
         session={session}
         subscription={subscription}
-        onManageSubscription={() => openPlanChooser("settings", "profile")}
+        onManageSubscription={() => openPlanChooser("profile")}
         onEditProfile={() => openStack("edit-profile", "profile")}
         onDisclaimer={() => openStack("disclaimer", "profile")}
         onSignOut={onSignOut}
@@ -488,8 +485,10 @@ function BuildWise() {
         focusPlan={focusPlan}
         planCount={store.plans.length}
         completedCount={readyCount}
+        subscription={subscription}
         onOpenPlan={openPlanDetail}
         onContinuePlan={(id) => continuePlan(id, "home")}
+        onSelectTier={selectTier}
         onStartNewPlan={(name) => startNewPlan("home", name)}
         onBrowsePlans={() => goTab("plan")}
       />

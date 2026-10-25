@@ -18,7 +18,10 @@ export function PhoneShell({
 }: PhoneShellProps) {
   return (
     <div className="flex h-dvh items-stretch justify-center overflow-hidden bg-background md:items-center md:bg-[#E8E4DC] md:p-8">
-      <div className="relative flex h-dvh w-full max-w-[430px] flex-col overflow-hidden bg-background md:h-[min(844px,calc(100dvh-4rem))] md:rounded-[2.25rem] md:border md:border-black/5 md:shadow-[0_24px_80px_-20px_rgba(42,38,32,0.35)]">
+      <div
+        data-phone-frame
+        className="relative flex h-dvh w-full max-w-[430px] flex-col overflow-hidden bg-background md:h-[min(844px,calc(100dvh-4rem))] md:rounded-[2.25rem] md:border md:border-black/5 md:shadow-[0_24px_80px_-20px_rgba(42,38,32,0.35)]"
+      >
         {/* Native status-bar safe area */}
         <div
           aria-hidden

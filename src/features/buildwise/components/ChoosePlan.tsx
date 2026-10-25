@@ -29,9 +29,11 @@ export function ChoosePlan({
 
   return (
     <main className="bw-page fade-in">
-      {isSettings && onBack ? <ScreenHeader title="Your plan" onBack={onBack} /> : null}
+      {onBack ? (
+        <ScreenHeader title={isSettings ? "Your plan" : "New plan"} onBack={onBack} />
+      ) : null}
 
-      <div className={`bw-pad-x ${isSettings ? "pt-1" : "pt-8"}`}>
+      <div className={`bw-pad-x ${onBack ? "pt-1" : "pt-8"}`}>
         <h1 className="bw-title">
           {isSettings ? "Manage your package" : "Choose how to plan"}
         </h1>

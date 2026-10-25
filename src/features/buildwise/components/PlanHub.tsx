@@ -16,17 +16,27 @@ import { hasCompletedPlan } from "../answers";
 import { isTopicComplete, planProgress } from "../plans";
 import { buildPlan } from "../recommendations";
 import { topicVisual } from "../topicVisual";
-import type { BuiltPlan, HomePlan, PlanTabMode, TopicId } from "../types";
+import type {
+  BuiltPlan,
+  HomePlan,
+  PlanTabMode,
+  SubscriptionId,
+  SubscriptionRecord,
+  TopicId,
+} from "../types";
+import { CreatePlanFlow } from "./CreatePlanFlow";
 import { FloorPlanViewer } from "./FloorPlanViewer";
-import { NamePlan } from "./NamePlan";
 import { PlanProgressCard } from "./PlanProgressCard";
+
 type PlanHubProps = {
   mode: PlanTabMode;
   plans: HomePlan[];
   activePlan: HomePlan | null;
   built: BuiltPlan | null;
+  subscription: SubscriptionRecord | null;
   onOpenPlan: (planId: string) => void;
   onBackToList: () => void;
+  onSelectTier: (tierId: SubscriptionId) => void;
   onStartNewPlan: (name: string) => void;
   onContinuePlan: (planId: string) => void;
   onEditAnswers: (planId: string) => void;
@@ -61,23 +71,29 @@ function formatUpdated(iso: string) {
 
 function PlansList({
   plans,
+  subscription,
   onOpenPlan,
   onContinuePlan,
+  onSelectTier,
   onStartNewPlan,
 }: {
   plans: HomePlan[];
+  subscription: SubscriptionRecord | null;
   onOpenPlan: (planId: string) => void;
   onContinuePlan: (planId: string) => void;
+  onSelectTier: (tierId: SubscriptionId) => void;
   onStartNewPlan: (name: string) => void;
 }) {
-  const [naming, setNaming] = useState(false);
+  const [creating, setCreating] = useState(false);
 
-  if (naming) {
+  if (creating) {
     return (
-      <NamePlan
-        onBack={() => setNaming(false)}
-        onConfirm={(name) => {
-          setNaming(false);
+      <CreatePlanFlow
+        subscription={subscription}
+        onBack={() => setCreating(false)}
+        onSelectTier={onSelectTier}
+        onConfirmName={(name) => {
+          setCreating(false);
           onStartNewPlan(name);
         }}
       />
@@ -105,7 +121,7 @@ function PlansList({
             <Button
               size="lg"
               className="mt-4 w-full leading-none"
-              onClick={() => setNaming(true)}
+              onClick={() => setCreating(true)}
             >
               Create New Plan
             </Button>
@@ -114,7 +130,7 @@ function PlansList({
           <Button
             size="lg"
             className="mt-6 w-full leading-none"
-            onClick={() => setNaming(true)}
+            onClick={() => setCreating(true)}
           >
             Create New Plan
           </Button>
@@ -524,8 +540,10 @@ export function PlanHub({
   plans,
   activePlan,
   built,
+  subscription,
   onOpenPlan,
   onBackToList,
+  onSelectTier,
   onStartNewPlan,
   onContinuePlan,
   onEditAnswers,
@@ -552,8 +570,10 @@ export function PlanHub({
   return (
     <PlansList
       plans={plans}
+      subscription={subscription}
       onOpenPlan={onOpenPlan}
       onContinuePlan={onContinuePlan}
+      onSelectTier={onSelectTier}
       onStartNewPlan={onStartNewPlan}
     />
   );

@@ -2,16 +2,19 @@ import { useState } from "react";
 import { ArrowRight, CheckCircle2, ClipboardList, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { planProgress } from "../plans";
-import type { HomePlan, Session } from "../types";
-import { NamePlan } from "./NamePlan";
+import type { HomePlan, Session, SubscriptionId, SubscriptionRecord } from "../types";
+import { CreatePlanFlow } from "./CreatePlanFlow";
 import { PlanProgressCard } from "./PlanProgressCard";
+
 type HomeProps = {
   session: Session;
   focusPlan: HomePlan | null;
   planCount: number;
   completedCount: number;
+  subscription: SubscriptionRecord | null;
   onOpenPlan: (planId: string) => void;
   onContinuePlan: (planId: string) => void;
+  onSelectTier: (tierId: SubscriptionId) => void;
   onStartNewPlan: (name: string) => void;
   onBrowsePlans: () => void;
 };
@@ -39,22 +42,26 @@ export function Home({
   focusPlan,
   planCount,
   completedCount,
+  subscription,
   onOpenPlan,
   onContinuePlan,
+  onSelectTier,
   onStartNewPlan,
   onBrowsePlans,
 }: HomeProps) {
-  const [naming, setNaming] = useState(false);
+  const [creating, setCreating] = useState(false);
   const firstName = session.name.split(" ")[0] || session.name;
   const hello = greeting();
   const progress = focusPlan ? planProgress(focusPlan) : null;
 
-  if (naming) {
+  if (creating) {
     return (
-      <NamePlan
-        onBack={() => setNaming(false)}
-        onConfirm={(name) => {
-          setNaming(false);
+      <CreatePlanFlow
+        subscription={subscription}
+        onBack={() => setCreating(false)}
+        onSelectTier={onSelectTier}
+        onConfirmName={(name) => {
+          setCreating(false);
           onStartNewPlan(name);
         }}
       />
@@ -159,7 +166,7 @@ export function Home({
         <div className="mt-3 flex flex-col gap-3">
           <button
             type="button"
-            onClick={() => setNaming(true)}
+            onClick={() => setCreating(true)}
             className="bw-press flex w-full items-center gap-4 rounded-[1.35rem] border border-border bg-card p-4 text-left shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <span className="grid size-12 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
