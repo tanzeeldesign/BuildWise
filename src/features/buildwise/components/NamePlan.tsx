@@ -27,7 +27,7 @@ export function NamePlan({ onBack, onConfirm }: NamePlanProps) {
           Give this project a label you will recognize later — a city, plot, or nickname.
         </p>
 
-        <div className="mt-8 flex flex-col gap-3.5">
+        <div className="mt-8 flex flex-col gap-2">
           <Label htmlFor={inputId} className="text-sm font-medium">
             Plan name
           </Label>
@@ -46,7 +46,7 @@ export function NamePlan({ onBack, onConfirm }: NamePlanProps) {
           <Button type="submit" size="lg" className="w-full" disabled={!name.trim()}>
             Continue
           </Button>
-          <Button type="button" variant="ghost" size="lg" className="w-full" onClick={onBack}>
+          <Button type="button" variant="outline" size="lg" className="w-full" onClick={onBack}>
             Cancel
           </Button>
         </div>

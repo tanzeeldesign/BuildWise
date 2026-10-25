@@ -499,7 +499,9 @@ function BuildWise() {
   return (
     <PhoneShell
       scrollable={view !== "profile"}
-      gridBackground={view === "home" || view === "plan" || view === "profile"}
+      gridBackground={
+        view === "home" || view === "plan" || view === "profile" || view === "guide"
+      }
       footer={showTabs ? <MobileTabBar active={tab} onChange={goTab} /> : undefined}
     >
       {content}

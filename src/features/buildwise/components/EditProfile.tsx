@@ -40,7 +40,7 @@ export function EditProfile({ session, onBack, onSaved }: EditProfileProps) {
         <p className="bw-body">Update your name, email, or password.</p>
 
         <div className="mt-8 space-y-5">
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="edit-name" className="text-sm font-medium">
               Name
             </Label>
@@ -52,7 +52,7 @@ export function EditProfile({ session, onBack, onSaved }: EditProfileProps) {
               autoComplete="name"
             />
           </div>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="edit-email" className="text-sm font-medium">
               Email
             </Label>
@@ -65,7 +65,7 @@ export function EditProfile({ session, onBack, onSaved }: EditProfileProps) {
               autoComplete="email"
             />
           </div>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="edit-password" className="text-sm font-medium">
               New password
             </Label>

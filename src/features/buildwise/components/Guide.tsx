@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import homeImage from "@/assets/buildwise-home.jpg";
 import ventilationImage from "@/assets/buildwise-ventilation.jpg";
 import { getTopic, nextTopicId } from "../recommendations";
+import { topicVisual } from "../topicVisual";
 import type { Answers, BuiltPlan, TopicId } from "../types";
 import { ScreenHeader } from "./ScreenHeader";
 
@@ -34,19 +35,29 @@ export function Guide({
   const isFirstGuide = topicIndex <= 0;
   const isLastGuide = topicIndex >= 0 && topicIndex === plan.topics.length - 1;
   const previousTopic = !isFirstGuide ? plan.topics[topicIndex - 1] : undefined;
+  const visual = topicVisual[topicId];
+  const TopicIcon = visual.icon;
   const image =
     topicId === "materials" || topicId === "design-direction" || topicId === "spatial"
       ? homeImage
       : ventilationImage;
 
   return (
-    <main className="bw-page fade-in">
+    <main className="bw-page fade-in relative bg-transparent">
       <ScreenHeader title="Guide" onBack={onBack} />
-      <article className="pb-8">
+      <article className="relative z-10 pb-8">
         <div className="bw-pad-x pt-4">
           <div className="flex items-center justify-between gap-3">
-            <p className="bw-eyebrow">{topic.label}</p>
-            <p className="text-[11px] font-semibold tabular-nums text-muted-foreground">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <span
+                aria-hidden
+                className={`grid size-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${visual.tint}`}
+              >
+                <TopicIcon className="size-4" strokeWidth={1.9} />
+              </span>
+              <p className="bw-eyebrow min-w-0 truncate">{topic.label}</p>
+            </div>
+            <p className="shrink-0 text-[11px] font-semibold tabular-nums text-muted-foreground">
               {String(guidesDone).padStart(2, "0")}/{String(guidesTotal).padStart(2, "0")}
             </p>
           </div>
@@ -68,7 +79,7 @@ export function Guide({
             className="h-48 w-full rounded-2xl object-cover shadow-sm"
           />
         </div>
-        <div className="plan-grid space-y-10 bw-pad-x py-10">
+        <div className="space-y-10 bw-pad-x py-10">
           <div>
             <h2 className="text-xl font-semibold tracking-tight">Why it matters</h2>
             <p className="mt-4 text-sm leading-snug text-muted-foreground">{topic.why}</p>
@@ -97,11 +108,11 @@ export function Guide({
           </blockquote>
         </div>
       </article>
-      <footer className="sticky bottom-0 z-20 mt-8 border-t border-border bg-background bw-pad-x pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      <footer className="sticky bottom-0 z-20 mt-8 border-t border-border bg-background/95 backdrop-blur-xl bw-pad-x pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="flex items-center gap-3">
           <Button
             size="icon"
-            className="size-[52px] shrink-0"
+            className="shrink-0"
             variant={isComplete ? "secondary" : "default"}
             aria-pressed={isComplete}
             aria-label={isComplete ? "Marked complete" : "Mark as complete"}

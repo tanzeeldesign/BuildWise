@@ -35,7 +35,7 @@ export function SignUp({ onBack, onSuccess, onGoSignIn }: SignUpProps) {
         <p className="bw-body">Enter your details to get started.</p>
 
         <div className="mt-8 space-y-5">
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="name" className="text-sm font-medium">
               Name
             </Label>
@@ -47,7 +47,7 @@ export function SignUp({ onBack, onSuccess, onGoSignIn }: SignUpProps) {
               autoComplete="name"
             />
           </div>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="email" className="text-sm font-medium">
               Email
             </Label>
@@ -60,7 +60,7 @@ export function SignUp({ onBack, onSuccess, onGoSignIn }: SignUpProps) {
               autoComplete="email"
             />
           </div>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="password" className="text-sm font-medium">
               Password
             </Label>

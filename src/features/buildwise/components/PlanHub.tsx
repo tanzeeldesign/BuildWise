@@ -2,17 +2,11 @@ import { useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
-  BrickWall,
   Check,
-  Compass,
   LayoutTemplate,
-  Palette,
   Pencil,
   Sparkles,
-  Sun,
   Trash2,
-  Wind,
-  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import floorPlanCardImage from "@/assets/floor-plan.png";
@@ -21,6 +15,7 @@ import ventilationImage from "@/assets/buildwise-ventilation.jpg";
 import { hasCompletedPlan } from "../answers";
 import { isTopicComplete, planProgress } from "../plans";
 import { buildPlan } from "../recommendations";
+import { topicVisual } from "../topicVisual";
 import type { BuiltPlan, HomePlan, PlanTabMode, TopicId } from "../types";
 import { FloorPlanViewer } from "./FloorPlanViewer";
 import { NamePlan } from "./NamePlan";
@@ -38,48 +33,6 @@ type PlanHubProps = {
   onDeletePlan: (planId: string) => void;
   onOpenGuide: (id: TopicId) => void;
   onOpenFinalPlan: () => void;
-};
-
-const topicVisual: Record<
-  TopicId,
-  { icon: LucideIcon; tint: string; chip: string; glow: string }
-> = {
-  orientation: {
-    icon: Compass,
-    tint: "from-[#E8F0E6] to-[#D5E4D2]",
-    chip: "bg-[#D7E8D4] text-[#2F5A3C]",
-    glow: "bg-[#3D6B4F]/12",
-  },
-  ventilation: {
-    icon: Wind,
-    tint: "from-[#E4F1F0] to-[#CEE6E4]",
-    chip: "bg-[#D0EAE7] text-[#1F5C56]",
-    glow: "bg-[#2A7A72]/12",
-  },
-  sunlight: {
-    icon: Sun,
-    tint: "from-[#F7F0E0] to-[#F0E0C0]",
-    chip: "bg-[#F3E4C0] text-[#7A5A18]",
-    glow: "bg-[#C9962A]/14",
-  },
-  materials: {
-    icon: BrickWall,
-    tint: "from-[#F3E8E2] to-[#E8D5C8]",
-    chip: "bg-[#EBD9CC] text-[#6B4330]",
-    glow: "bg-[#A66B4A]/12",
-  },
-  spatial: {
-    icon: LayoutTemplate,
-    tint: "from-[#E8ECF3] to-[#D5DCE8]",
-    chip: "bg-[#D8E0EC] text-[#31486A]",
-    glow: "bg-[#4A6488]/12",
-  },
-  "design-direction": {
-    icon: Palette,
-    tint: "from-[#ECE8F0] to-[#DDD6E8]",
-    chip: "bg-[#E2DAEC] text-[#4A3A66]",
-    glow: "bg-[#6B568C]/12",
-  },
 };
 
 function heroFor(id: TopicId) {
@@ -213,7 +166,7 @@ function PlanDetail({
   const [floorPlanOpen, setFloorPlanOpen] = useState(false);
   const unlocked = hasCompletedPlan(plan.answers);
   const progress = planProgress(plan);
-  const rest = built.topics.slice(1);
+  const rest = built.topics;
   const spotlightVisual = topicVisual[built.topTopicId];
   const SpotlightIcon = spotlightVisual.icon;
   const chips = profileChips(built.profileStrip);
@@ -273,13 +226,13 @@ function PlanDetail({
 
   return (
     <main className="bw-page fade-in relative bg-transparent pb-4">
-      <div className="relative z-10">
+      <div className="relative z-10 min-w-0 max-w-full">
       <div
         aria-hidden
         className="pointer-events-none absolute -right-16 top-0 size-48 rounded-full bg-accent/50 blur-3xl"
       />
 
-      <div className="bw-pad-x relative pt-6">
+      <div className="bw-pad-x relative min-w-0 max-w-full pt-6">
         <button
           type="button"
           onClick={onBackToList}
@@ -317,7 +270,7 @@ function PlanDetail({
           </div>
         </div>
 
-        <div className="mt-4 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mt-4 flex min-w-0 max-w-full gap-2 overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {chips.map((chip) => (
             <span
               key={chip}
@@ -331,14 +284,16 @@ function PlanDetail({
         <div className="mt-4 flex gap-2">
           <Button
             variant="outline"
-            className="flex-1 rounded-2xl"
+            size="lg"
+            className="flex-1"
             onClick={() => onEditAnswers(plan.id)}
           >
             <Pencil className="size-4" /> Edit answers
           </Button>
           <Button
-            variant="ghost"
-            className="rounded-2xl text-red-800 hover:bg-red-50 hover:text-red-900"
+            variant="outline"
+            size="lg"
+            className="shrink-0 px-4 text-red-800 hover:bg-red-50 hover:text-red-900"
             aria-label="Delete plan"
             onClick={() => onDeletePlan(plan.id)}
           >
@@ -455,8 +410,8 @@ function PlanDetail({
         </Button>
       </div>
 
-      <div className="bw-pad-x mt-8">
-        <h2 className="text-lg font-semibold tracking-tight">More guides</h2>
+      <div className="bw-pad-x mt-8 min-w-0 max-w-full">
+        <h2 className="text-lg font-semibold tracking-tight">Jump to Guide Page</h2>
         <p className="mt-1 text-xs text-muted-foreground">Tap a card to open it.</p>
 
         <div className="mt-4 flex flex-col gap-3">
@@ -533,7 +488,7 @@ function PlanDetail({
           })}
         </div>
 
-        <div className="mt-6 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mt-6 flex min-w-0 max-w-full gap-2 overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {built.topics.map((topic) => {
             const visual = topicVisual[topic.id];
             const Icon = visual.icon;

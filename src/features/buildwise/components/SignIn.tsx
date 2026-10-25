@@ -34,7 +34,7 @@ export function SignIn({ onBack, onSuccess, onGoSignUp }: SignInProps) {
         <p className="bw-body">Enter your details to sign in.</p>
 
         <div className="mt-8 space-y-5">
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="email" className="text-sm font-medium">
               Email
             </Label>
@@ -47,7 +47,7 @@ export function SignIn({ onBack, onSuccess, onGoSignUp }: SignInProps) {
               autoComplete="email"
             />
           </div>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="password" className="text-sm font-medium">
               Password
             </Label>

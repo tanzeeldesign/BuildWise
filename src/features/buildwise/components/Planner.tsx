@@ -43,8 +43,7 @@ export function Planner({ step, setStep, answers, setAnswers, onExit, onDone }: 
 
   return (
     <main className="bw-page plan-grid">
-      <header className="sticky top-0 z-20 flex items-center justify-between bg-background/90 px-5 py-3 backdrop-blur-xl">
-        <p className="text-sm font-semibold tracking-tight">BuildWise</p>
+      <header className="sticky top-0 z-20 flex items-center justify-end bg-background/90 px-5 py-3 backdrop-blur-xl">
         <button
           type="button"
           onClick={onExit}
@@ -120,11 +119,18 @@ export function Planner({ step, setStep, answers, setAnswers, onExit, onDone }: 
           })}
         </div>
       </section>
-      <footer className="sticky bottom-0 z-20 flex items-center justify-between gap-3 border-t border-border/50 bg-background/95 px-5 py-3 backdrop-blur-xl pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-        <Button variant="ghost" className="rounded-2xl" onClick={() => (step === 0 ? onExit() : setStep(step - 1))}>
+      <footer className="sticky bottom-0 z-20 flex items-center gap-3 border-t border-border/50 bg-background/95 px-5 py-3 backdrop-blur-xl pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <Button
+          variant="outline"
+          size="lg"
+          className="flex-1"
+          onClick={() => (step === 0 ? onExit() : setStep(step - 1))}
+        >
           <ArrowLeft /> Back
         </Button>
         <Button
+          size="lg"
+          className="flex-1"
           disabled={!canContinue}
           onClick={() => (step === TOTAL_STEPS - 1 ? onDone() : setStep(step + 1))}
         >

@@ -11,7 +11,7 @@ type ScreenHeaderProps = {
 export function ScreenHeader({ title, onBack, right, inverse }: ScreenHeaderProps) {
   return (
     <header
-      className={`sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between gap-3 border-b px-5 backdrop-blur-xl ${
+      className={`sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between gap-3 border-b px-5 backdrop-blur-xl ${
         inverse
           ? "border-background/15 bg-foreground/90 text-background"
           : "border-border/80 bg-background/90"
@@ -25,11 +25,11 @@ export function ScreenHeader({ title, onBack, right, inverse }: ScreenHeaderProp
             aria-label="Back"
             className={`bw-back ${
               inverse
-                ? "border-background/25 bg-background/10 text-background hover:bg-background/15"
+                ? "border-background/25 bg-background/10 text-background shadow-none hover:bg-background/15"
                 : ""
             }`}
           >
-            <ArrowLeft className="size-[18px]" strokeWidth={2} />
+            <ArrowLeft className="size-4" strokeWidth={2} />
           </button>
         )}
         {title && (

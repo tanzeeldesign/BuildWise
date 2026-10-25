@@ -42,8 +42,8 @@ export function PhoneShell({
             data-phone-scroll
             className={
               scrollable
-                ? "relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-y-contain bg-transparent"
-                : "relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden overscroll-none bg-transparent"
+                ? "relative z-10 flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain overscroll-x-none bg-transparent"
+                : "relative z-10 flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden overscroll-none bg-transparent"
             }
           >
             {children}
