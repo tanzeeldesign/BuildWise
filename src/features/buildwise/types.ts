@@ -5,6 +5,7 @@ export type View =
   | "get-started"
   | "sign-in"
   | "sign-up"
+  | "choose-plan"
   | "home"
   | "plan"
   | "profile"
@@ -12,7 +13,31 @@ export type View =
   | "processing"
   | "guide"
   | "final-plan"
-  | "disclaimer";
+  | "disclaimer"
+  | "edit-profile";
+
+/** Customer subscription / package tier (not a home plan). */
+export type SubscriptionId = "free" | "home-planning";
+
+export type SubscriptionBilling = "free" | "one-time";
+
+export type SubscriptionTier = {
+  id: SubscriptionId;
+  name: string;
+  tagline: string;
+  priceLabel: string;
+  priceNote: string;
+  billing: SubscriptionBilling;
+  audience: string;
+  features: string[];
+  highlight: boolean;
+  ctaLabel: string;
+};
+
+export type SubscriptionRecord = {
+  tierId: SubscriptionId;
+  selectedAt: string;
+};
 
 export type TopicId =
   | "orientation"
@@ -37,7 +62,8 @@ export type Answers = {
   project?: string;
   location?: string;
   plot?: string;
-  climate?: string;
+  /** Multi-select climate challenges (legacy single strings are normalized on load). */
+  climate?: string[];
   family?: string;
   outdoor?: string;
   future?: string;
@@ -45,13 +71,15 @@ export type Answers = {
   priorities?: string[];
 };
 
+export type MultiAnswerKey = "climate" | "priorities";
+
 export type QuestionOption = {
   value: string;
   description: string;
 };
 
 export type Question = {
-  key: Exclude<AnswerKey, "priorities"> | "priorities";
+  key: AnswerKey;
   title: string;
   text: string;
   options: QuestionOption[];
@@ -89,3 +117,22 @@ export type Session = {
   name: string;
   email: string;
 };
+
+export type HomePlan = {
+  id: string;
+  name: string;
+  /** When true, keep the user-chosen name instead of deriving from answers. */
+  nameIsCustom?: boolean;
+  createdAt: string;
+  updatedAt: string;
+  answers: Answers;
+  /** Guide topics the user marked complete on recommendation screens. */
+  completedTopics: TopicId[];
+};
+
+export type PlansStore = {
+  plans: HomePlan[];
+  activePlanId: string | null;
+};
+
+export type PlanTabMode = "list" | "detail";

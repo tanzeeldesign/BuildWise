@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BuildWise — All Screens (Figma Export)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #3A3530;
+  color: #2A2620;
+  font-family: "Manrope", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; object-fit: cover; }
+.artboard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 48px 40px;
+  padding: 64px;
+  width: 5200px;
+  background: #3A3530;
+}
+.frame { width: 390px; }
+.frame-label {
+  color: #C8C2B4;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.screen-frame {
+  width: 390px;
+  min-height: 844px;
+  height: auto;
+  background: #F7F5F0;
+  overflow: visible;
+  position: relative;
+  border-radius: 0;
+}
+.screen {
+  width: 390px;
+  min-height: 844px;
+  height: auto;
+  background: #F7F5F0;
+  color: #2A2620;
+  position: relative;
+  overflow: hidden;
+}
+.screen.inverse { background: #3A3530; color: #F7F5F0; }
+.flex-col { display: flex; flex-direction: column; }
+.grow { flex: 1; }
+.with-tabs { }
+.content-scroll {
+  flex: 1;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+.grid-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 390px;
+  height: 100%;
+  min-height: 844px;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-image: url("./assets/plan-grid.png");
+  background-repeat: repeat;
+  background-size: 390px 1400px;
+  background-position: top left;
+}
+.grid-img {
+  width: 390px;
+  height: 100%;
+  min-height: 844px;
+  object-fit: cover;
+  object-position: top left;
+  display: block;
+}
+.asset-phone { background: #F7F5F0; display: flex; flex-direction: column; }
+.asset-grid { width: 390px; height: 760px; object-fit: cover; object-position: top left; display: block; }
+.asset-caption {
+  padding: 16px 20px 24px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7A7468;
+  line-height: 1.4;
+}
+.grid-layer-dark {
+  opacity: 0.22;
+  filter: invert(1) brightness(1.4);
+}
+.screen-front {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 844px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.splash-front, .processing-front {
+  align-items: center;
+  justify-content: center;
+}
+.guide-body { position: relative; overflow: hidden; }
+.primary { color: #3D6B4F; }
+.muted { color: #7A7468; }
+.strong { font-weight: 500; }
+.tiny { font-size: 12px; }
+.small { font-size: 14px; }
+.upper { text-transform: uppercase; }
+.tracking { letter-spacing: 0.18em; }
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.h1 {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.h2 { font-size: 20px; font-weight: 600; line-height: 1.25; }
+.body { font-size: 14px; line-height: 1.5; }
+.lh-28 { line-height: 1.75; }
+.pad-x { padding-left: 20px; padding-right: 20px; }
+.pad-top { padding-top: 32px; padding-bottom: 24px; display: flex; flex-direction: column; flex: 1; }
+.px-20 { padding-left: 20px; padding-right: 20px; }
+.mx-20 { margin-left: 20px; margin-right: 20px; }
+.pt-24 { padding-top: 24px; }
+.py-32 { padding-top: 32px; padding-bottom: 32px; }
+.pb-8 { padding-bottom: 8px; }
+.pb-24 { padding-bottom: 24px; }
+.pb-32 { padding-bottom: 32px; }
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mt-20 { margin-top: 20px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+.mt-40 { margin-top: 40px; }
+.mt-auto { margin-top: auto; }
+.logo-mark {
+  display: grid;
+  place-items: center;
+  border: 1px solid #3D6B4F;
+  color: #3D6B4F;
+}
+.logo-mark-lg { width: 56px; height: 56px; }
+.logo-mark-sm { width: 32px; height: 32px; }
+.splash { display: flex; align-items: center; justify-content: center; }
+.splash-inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.splash-title { margin-top: 32px; font-size: 36px; font-weight: 600; }
+.hero-img-wrap { position: relative; width: 390px; height: 224px; flex-shrink: 0; overflow: hidden; }
+.photo {
+  display: block;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: #C8C2B4;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.photo-home { background-image: url("./assets/buildwise-home.jpg"); }
+.photo-vent { background-image: url("./assets/buildwise-ventilation.jpg"); }
+.hero-fade {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, #F7F5F0 0%, rgba(247,245,240,0.4) 45%, transparent 100%);
+}
+.guide-img { margin-top: 24px; }
+.get-started-body {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 8px 20px 32px;
+}
+.brand-row { display: flex; align-items: center; gap: 8px; }
+.brand-name { font-size: 16px; font-weight: 700; }
+.cta-stack { display: flex; flex-direction: column; gap: 12px; padding-top: 40px; }
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 52px; padding: 0 28px;
+  font-size: 14px; font-weight: 600;
+  border-radius: 4px; width: 100%;
+}
+.btn-default { background: #3D6B4F; color: #FAF9F6; }
+.btn-outline { background: #F7F5F0; color: #2A2620; border: 1px solid #D4D0C5; }
+.btn-secondary { background: #EBE8E0; color: #3A3530; }
+.btn-ghost { background: transparent; color: #2A2620; }
+.btn-ghost-inverse { background: transparent; color: #F7F5F0; }
+.btn-ghost-inverse-soft { background: transparent; color: rgba(247,245,240,0.7); }
+.screen-header {
+  height: 56px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; border-bottom: 1px solid #D4D0C5; background: #F7F5F0;
+}
+.screen-header-inverse {
+  background: #3A3530; color: #F7F5F0;
+  border-bottom-color: rgba(247,245,240,0.15);
+}
+.screen-header-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.back-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 6px; }
+.screen-header-title { font-size: 16px; font-weight: 600; }
+.form-body {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 24px 20px 32px;
+}
+.fields { display: flex; flex-direction: column; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 14px; font-weight: 500; }
+.input {
+  height: 36px; border: 1px solid #D4D0C5; border-radius: 6px;
+  padding: 0 12px; display: flex; align-items: center;
+  font-size: 14px; color: #7A7468; background: transparent;
+}
+.card {
+  border: 1px solid #D4D0C5; background: #FCFAF7; padding: 16px;
+}
+.step-cards { display: flex; flex-direction: column; gap: 12px; }
+.num { font-size: 12px; color: #3D6B4F; }
+.card-title { margin-top: 12px; font-size: 18px; font-weight: 600; }
+.card-desc { margin-top: 4px; font-size: 14px; color: #7A7468; }
+.pill {
+  display: inline-flex; align-items: center;
+  border: 1px solid rgba(61,107,79,0.3); background: #E0EBE3;
+  color: #3D6B4F; font-size: 12px; font-weight: 600;
+  padding: 4px 12px; border-radius: 999px; align-self: flex-start;
+}
+.featured { border: 1px solid #D4D0C5; overflow: hidden; width: 350px; }
+.featured-body { background: #2A2620; color: #F7F5F0; padding: 20px; }
+.featured-eyebrow { color: rgba(247,245,240,0.55); letter-spacing: 0.14em; }
+.featured-title { margin-top: 8px; font-size: 24px; font-weight: 600; }
+.featured-desc { margin-top: 8px; font-size: 14px; color: rgba(247,245,240,0.65); line-height: 1.4; }
+.featured-link {
+  margin-top: 16px; display: inline-flex; align-items: center; gap: 4px;
+  font-size: 14px; font-weight: 600;
+}
+.tabbar {
+  flex-shrink: 0; border-top: 1px solid #D4D0C5;
+  background: rgba(247,245,240,0.95); padding: 8px 8px 12px;
+}
+.tabbar-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+.tab {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 8px 0; border-radius: 8px;
+  font-size: 11px; font-weight: 600; color: #7A7468;
+}
+.tab-active { background: #E0EBE3; color: #3D6B4F; }
+.plan-header {
+  border-bottom: 1px solid #D4D0C5;
+  padding: 32px 20px 24px;
+}
+.plan-hero { background: #2A2620; color: #F7F5F0; overflow: hidden; width: 350px; }
+.plan-hero-body { padding: 20px; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.topic-list { border: 1px solid #D4D0C5; background: #D4D0C5; display: flex; flex-direction: column; gap: 1px; }
+.topic-row {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  background: #F7F5F0; padding: 16px; color: #7A7468;
+}
+.topic-title { margin-top: 8px; font-size: 18px; font-weight: 600; color: #2A2620; }
+.section-label {
+  font-size: 14px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #7A7468;
+}
+.profile-rows { border-top: 1px solid #D4D0C5; }
+.profile-row { border-bottom: 1px solid #D4D0C5; padding: 16px 0; }
+.profile-val { margin-top: 4px; font-size: 16px; font-weight: 600; }
+.planner-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+}
+.planner-brand { font-size: 14px; font-weight: 600; }
+.close-btn {
+  width: 40px; height: 40px; display: grid; place-items: center;
+  border: 1px solid #D4D0C5;
+}
+.planner-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; font-weight: 600;
+}
+.progress-track { margin-top: 12px; height: 1px; background: #D4D0C5; position: relative; }
+.progress-fill { position: absolute; left: 0; top: -1px; height: 3px; background: #3D6B4F; }
+.planner-body {
+  flex: 1; padding: 32px 20px 24px; overflow: visible;
+}
+.multi-note { margin-top: 12px; font-size: 14px; font-weight: 500; color: #3D6B4F; }
+.options { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+.option {
+  min-height: 80px; display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; border: 1px solid #D4D0C5; background: #FCFAF7; padding: 16px; text-align: left;
+}
+.option-active { border-color: #3D6B4F; background: #E0EBE3; }
+.option-title { font-size: 16px; font-weight: 600; }
+.option-desc { margin-top: 4px; font-size: 14px; color: #7A7468; }
+.option-check {
+  width: 28px; height: 28px; flex-shrink: 0; border-radius: 999px;
+  border: 1px solid #D4D0C5; display: grid; place-items: center;
+}
+.option-check-active { border-color: #3D6B4F; background: #3D6B4F; color: #FAF9F6; }
+.planner-footer {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border-top: 1px solid #D4D0C5; background: rgba(247,245,240,0.95);
+  padding: 12px 16px; margin-top: auto;
+}
+.planner-footer .btn { width: auto; }
+.processing { display: flex; align-items: center; justify-content: center; padding: 0 20px; }
+.processing-inner { width: 100%; }
+.guide-body { padding: 40px 20px; position: relative; overflow: hidden; }
+.guide-body .grid-layer { min-height: 100%; height: 100%; }
+.guide-body .screen-front { min-height: 0; }
+.discuss-list { border-top: 1px solid #D4D0C5; }
+.discuss-row {
+  display: flex; align-items: center; gap: 16px;
+  border-bottom: 1px solid #D4D0C5; padding: 16px 0;
+}
+.discuss-label { font-size: 16px; font-weight: 600; }
+.tip-block { background: #E0EBE3; padding: 40px 20px; }
+.tip-quote {
+  margin-top: 16px; font-size: 24px; font-weight: 600;
+  line-height: 1.2; text-wrap: balance;
+}
+.final-body { padding: 32px 20px; flex: 1; position: relative; overflow: hidden; }
+.final-body .screen-front { min-height: 0; padding: 0; }
+.inverse-muted { color: rgba(247,245,240,0.55); }
+.inverse-soft { color: rgba(247,245,240,0.6); }
+.final-list { border-top: 1px solid rgba(247,245,240,0.2); }
+.final-row {
+  display: flex; align-items: center; gap: 16px;
+  border-bottom: 1px solid rgba(247,245,240,0.2); padding: 20px 0;
+}
+.final-num { width: 32px; font-size: 12px; color: rgba(247,245,240,0.45); }
+.final-title { font-size: 20px; font-weight: 600; }
+.disclaimer-copy {
+  display: flex; flex-direction: column; gap: 20px;
+  font-size: 14px; line-height: 1.75; color: #7A7468;
+}
+.disclaimer-copy strong { color: #2A2620; font-weight: 600; }
+</style>
+</head>
+<body>
+  <!--
+    BuildWise — All Screens Artboard
+    Phone size: 390 × 844 (matches app PhoneShell)
+    Optimized for html.to.design / iframe → Figma plugins:
+    - Fixed pixel frames (no viewport units)
+    - Flat layout, no sticky/fixed outside phones
+    - Hex colors, Manrope, embedded images
+    - Each screen frame uses data-name / class from its screen title (e.g. 01-Splash)
+  -->
+  <div class="artboard" data-name="BuildWise — All Screens">
+    <div class="frame" data-name="00 Assets — Plan Grid">
+  <div class="frame-label">00 Assets — Square Plan Grid (52px)</div>
+  <div class="screen-frame asset-phone 00-Assets-Plan-Grid" id="00-Assets-Plan-Grid" data-name="00 Assets — Plan Grid" name="00 Assets — Plan Grid" aria-label="00 Assets — Plan Grid">
+    <img class="asset-grid" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="844" data-name="plan-grid.png" />
+    <p class="asset-caption">Blueprint square grid · 52px cells · used on Splash, Planner, Processing, Guide, Final Plan</p>
+  </div>
+</div>
+<div class="frame" data-name="01 Splash">
+  <div class="frame-label">01 Splash</div>
+  <div class="screen-frame 01-Splash" id="01-Splash" data-name="01 Splash" name="01 Splash" aria-label="01 Splash">
+    <div class="screen splash">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front splash-front">
+      <div class="splash-inner">
+        <span class="logo-mark logo-mark-lg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+        <h1 class="splash-title">BuildWise</h1>
+        <p class="eyebrow primary mt-16">Helping Pakistanis Build Smarter Homes</p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="02 Get Started">
+  <div class="frame-label">02 Get Started</div>
+  <div class="screen-frame 02-Get-Started" id="02-Get-Started" data-name="02 Get Started" name="02 Get Started" aria-label="02 Get Started">
+    <div class="screen flex-col">
+      <div class="hero-img-wrap">
+        <div class="photo photo-home " style="width:390px;height:224px" role="img" aria-label="Architecture photo"></div>
+        <div class="hero-fade"></div>
+      </div>
+      <div class="get-started-body">
+        <div class="brand-row">
+          <span class="logo-mark logo-mark-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+          <span class="brand-name">BuildWise</span>
+        </div>
+        <h1 class="h1 mt-24">Build smarter.<br/>Before you build.</h1>
+        <p class="body muted mt-16">Plan your home around climate, lifestyle and future needs — then share a clear guide with your architect.</p>
+        <div class="cta-stack mt-auto">
+          <div class="btn btn-default"><span>Let’s build</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+          <div class="btn btn-ghost"><span>I already have an account</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="03 Sign Up">
+  <div class="frame-label">03 Sign Up</div>
+  <div class="screen-frame 03-Sign-Up" id="03-Sign-Up" data-name="03 Sign Up" name="03 Sign Up" aria-label="03 Sign Up">
+    <div class="screen flex-col">
+      <header class="screen-header ">
+    <div class="screen-header-left">
+      <div class="back-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
+      <h1 class="screen-header-title">Create account</h1>
+    </div>
+  </header>
+      <div class="form-body">
+        <p class="body muted">Dummy signup for this prototype — data stays on this device.</p>
+        <div class="fields mt-32">
+          <div class="field"><label>Name</label><div class="input">Your name</div></div>
+          <div class="field"><label>Email</label><div class="input">you@email.com</div></div>
+          <div class="field"><label>Password</label><div class="input">At least 4 characters</div></div>
+        </div>
+        <div class="cta-stack mt-auto">
+          <div class="btn btn-default"><span>Sign up</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+          <div class="btn btn-ghost"><span>Already have an account? Sign in</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="04 Sign In">
+  <div class="frame-label">04 Sign In</div>
+  <div class="screen-frame 04-Sign-In" id="04-Sign-In" data-name="04 Sign In" name="04 Sign In" aria-label="04 Sign In">
+    <div class="screen flex-col">
+      <header class="screen-header ">
+    <div class="screen-header-left">
+      <div class="back-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
+      <h1 class="screen-header-title">Sign in</h1>
+    </div>
+  </header>
+      <div class="form-body">
+        <p class="body muted">Welcome back. Use the account you created on this device.</p>
+        <div class="fields mt-32">
+          <div class="field"><label>Email</label><div class="input">you@email.com</div></div>
+          <div class="field"><label>Password</label><div class="input">Your password</div></div>
+        </div>
+        <div class="cta-stack mt-auto">
+          <div class="btn btn-default"><span>Sign in</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+          <div class="btn btn-ghost"><span>Need an account? Sign up</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="05 Home — Empty">
+  <div class="frame-label">05 Home — Empty</div>
+  <div class="screen-frame 05-Home-Empty" id="05-Home-Empty" data-name="05 Home — Empty" name="05 Home — Empty" aria-label="05 Home — Empty">
+    <div class="screen flex-col with-tabs">
+      <div class="pad-x pad-top">
+        <p class="eyebrow primary">Home</p>
+        <h1 class="h1 mt-12">Good morning, Sarah.</h1>
+        <p class="body muted mt-12">Your smarter home plan starts with a few focused questions about place, climate and how you live.</p>
+        <div class="step-cards mt-32">
+          <div class="card"><span class="num">01</span><h2 class="card-title">Tell us about home</h2><p class="card-desc">Location, plot and lifestyle.</p></div>
+          <div class="card"><span class="num">02</span><h2 class="card-title">See what matters</h2><p class="card-desc">Dummy recommendations shaped for you.</p></div>
+          <div class="card"><span class="num">03</span><h2 class="card-title">Share with confidence</h2><p class="card-desc">A guide for your architect.</p></div>
+        </div>
+        <div class="mt-auto pb-8"><div class="btn btn-default"><span>Start planning</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div></div>
+      </div>
+      <nav class="tabbar">
+    <div class="tabbar-grid">
+      <div class="tab tab-active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div><div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+        <span>Plan</span>
+      </div><div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </nav>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="06 Home — Plan Ready">
+  <div class="frame-label">06 Home — Plan Ready</div>
+  <div class="screen-frame 06-Home-Plan-Ready" id="06-Home-Plan-Ready" data-name="06 Home — Plan Ready" name="06 Home — Plan Ready" aria-label="06 Home — Plan Ready">
+    <div class="screen flex-col with-tabs">
+      <div class="content-scroll">
+        <div class="pad-x pad-top">
+          <p class="small muted">Good morning, Sarah.</p>
+          <h1 class="h1 mt-8">Your plan is taking shape.</h1>
+          <p class="body strong mt-12">Karachi · Build a new home · Modern · 3–5 people</p>
+          <div class="pill mt-16">Plan ready</div>
+        </div>
+        <div class="featured mx-20 mt-32">
+          <div class="photo photo-vent " style="width:350px;height:144px" role="img" aria-label="Architecture photo"></div>
+          <div class="featured-body">
+            <p class="eyebrow featured-eyebrow">Top consideration</p>
+            <h2 class="featured-title">Ventilation</h2>
+            <p class="featured-desc">Karachi homes can hold heat long after sunset. Thoughtful openings help rooms feel comfortable.</p>
+            <span class="featured-link">Explore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+          </div>
+        </div>
+        <div class="cta-stack pad-x mt-24">
+          <div class="btn btn-default"><span>View full plan</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+          <div class="btn btn-outline"><span>Update answers</span></div>
+        </div>
+      </div>
+      <nav class="tabbar">
+    <div class="tabbar-grid">
+      <div class="tab tab-active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div><div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+        <span>Plan</span>
+      </div><div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </nav>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="07 Plan — Empty">
+  <div class="frame-label">07 Plan — Empty</div>
+  <div class="screen-frame 07-Plan-Empty" id="07-Plan-Empty" data-name="07 Plan — Empty" name="07 Plan — Empty" aria-label="07 Plan — Empty">
+    <div class="screen flex-col with-tabs">
+      <div class="pad-x pad-top flex-col grow">
+        <p class="eyebrow primary">Plan</p>
+        <h1 class="h1 mt-12">No plan yet.</h1>
+        <p class="body muted mt-12">Answer a short set of questions to unlock recommendations on orientation, ventilation, light, materials and more.</p>
+        <div class="mt-auto pb-8"><div class="btn btn-default"><span>Start planning</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div></div>
+      </div>
+      <nav class="tabbar">
+    <div class="tabbar-grid">
+      <div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div><div class="tab tab-active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+        <span>Plan</span>
+      </div><div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </nav>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="08 Plan — Hub">
+  <div class="frame-label">08 Plan — Hub</div>
+  <div class="screen-frame 08-Plan-Hub" id="08-Plan-Hub" data-name="08 Plan — Hub" name="08 Plan — Hub" aria-label="08 Plan — Hub">
+    <div class="screen flex-col with-tabs">
+      <div class="content-scroll">
+        <div class="plan-header">
+          <p class="eyebrow primary">Plan</p>
+          <h1 class="h1 mt-12">Your home plan is taking shape.</h1>
+          <p class="body strong mt-12">Karachi · Build a new home · Modern · 3–5 people</p>
+        </div>
+        <article class="plan-hero mx-20 mt-24">
+          <div class="photo photo-vent " style="width:350px;height:160px" role="img" aria-label="Architecture photo"></div>
+          <div class="plan-hero-body">
+            <p class="eyebrow featured-eyebrow">Top consideration</p>
+            <h2 class="featured-title">Ventilation</h2>
+            <p class="featured-desc">Karachi homes can hold heat long after sunset. Thoughtful openings, shaded edges and a clear path for air help rooms feel comfortable with less reliance on cooling.</p>
+            <div class="mt-20"><div class="btn btn-secondary"><span>Explore</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div></div>
+          </div>
+        </article>
+        <div class="pad-x mt-32 pb-24">
+          <div class="section-head">
+            <h2 class="h2">Considerations</h2>
+            <span class="tiny muted">06 areas</span>
+          </div>
+          <div class="topic-list mt-16">
+            <div class="topic-row">
+              <div>
+                <span class="num">01</span>
+                <h3 class="topic-title">Orientation</h3>
+                <p class="card-desc">How sunlight and positioning can influence comfort.</p>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div><div class="topic-row">
+              <div>
+                <span class="num">02</span>
+                <h3 class="topic-title">Ventilation</h3>
+                <p class="card-desc">Plan natural airflow before you rely on mechanical cooling.</p>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div><div class="topic-row">
+              <div>
+                <span class="num">03</span>
+                <h3 class="topic-title">Sunlight</h3>
+                <p class="card-desc">Plan daylight into the spaces you use most.</p>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div><div class="topic-row">
+              <div>
+                <span class="num">04</span>
+                <h3 class="topic-title">Materials</h3>
+                <p class="card-desc">Suggest finishes that suit climate, maintenance and character.</p>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div><div class="topic-row">
+              <div>
+                <span class="num">05</span>
+                <h3 class="topic-title">Spatial considerations</h3>
+                <p class="card-desc">Shape rooms around family life, privacy and outdoor use.</p>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div><div class="topic-row">
+              <div>
+                <span class="num">06</span>
+                <h3 class="topic-title">Design direction</h3>
+                <p class="card-desc">Align architecture with the character you want at home.</p>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="mt-24"><div class="btn btn-outline"><span>Shareable plan</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div></div>
+        </div>
+      </div>
+      <nav class="tabbar">
+    <div class="tabbar-grid">
+      <div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div><div class="tab tab-active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+        <span>Plan</span>
+      </div><div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </nav>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="09 Profile">
+  <div class="frame-label">09 Profile</div>
+  <div class="screen-frame 09-Profile" id="09-Profile" data-name="09 Profile" name="09 Profile" aria-label="09 Profile">
+    <div class="screen flex-col with-tabs">
+      <div class="content-scroll">
+        <div class="plan-header">
+          <p class="eyebrow primary">Profile</p>
+          <h1 class="h1 mt-12">Sarah Ahmed</h1>
+          <p class="body muted mt-8">sarah@email.com</p>
+        </div>
+        <section class="pad-x pt-24">
+          <h2 class="section-label">Home profile</h2>
+          <div class="profile-rows mt-16">
+            <div class="profile-row">
+              <span class="tiny muted upper">Project</span>
+              <p class="profile-val">Build a new home</p>
+            </div><div class="profile-row">
+              <span class="tiny muted upper">Location</span>
+              <p class="profile-val">Karachi</p>
+            </div><div class="profile-row">
+              <span class="tiny muted upper">Plot</span>
+              <p class="profile-val">5–10 marla</p>
+            </div><div class="profile-row">
+              <span class="tiny muted upper">Climate</span>
+              <p class="profile-val">Intense heat</p>
+            </div><div class="profile-row">
+              <span class="tiny muted upper">Household</span>
+              <p class="profile-val">3–5 people</p>
+            </div><div class="profile-row">
+              <span class="tiny muted upper">Style</span>
+              <p class="profile-val">Modern</p>
+            </div>
+          </div>
+        </section>
+        <div class="cta-stack pad-x mt-32 pb-24">
+          <div class="btn btn-default"><span>Edit home answers</span></div>
+          <div class="btn btn-outline"><span>Disclaimer</span></div>
+          <div class="btn btn-ghost"><span>Sign out</span></div>
+        </div>
+      </div>
+      <nav class="tabbar">
+    <div class="tabbar-grid">
+      <div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div><div class="tab ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+        <span>Plan</span>
+      </div><div class="tab tab-active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </nav>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="10 Planner — Step 01">
+  <div class="frame-label">10 Planner — Step 01</div>
+  <div class="screen-frame 10-Planner-Step-01" id="10-Planner-Step-01" data-name="10 Planner — Step 01" name="10 Planner — Step 01" aria-label="10 Planner — Step 01">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 01 of 09</span>
+          <span class="muted">11%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:11%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">What are you planning?</h1>
+        <p class="body muted mt-12">We'll shape your guide around the kind of project ahead.</p>
+        
+        <div class="options"><div class="option option-active">
+    <div>
+      <h2 class="option-title">Build a new home</h2>
+      <p class="option-desc">Starting from the ground up</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Renovate</h2>
+      <p class="option-desc">Improving an existing home</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Redesign</h2>
+      <p class="option-desc">Rethinking how spaces work together</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="11 Planner — Step 02">
+  <div class="frame-label">11 Planner — Step 02</div>
+  <div class="screen-frame 11-Planner-Step-02" id="11-Planner-Step-02" data-name="11 Planner — Step 02" name="11 Planner — Step 02" aria-label="11 Planner — Step 02">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 02 of 09</span>
+          <span class="muted">22%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:22%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">Where are you building?</h1>
+        <p class="body muted mt-12">Your location helps us understand the conditions your home needs to respond to.</p>
+        
+        <div class="options"><div class="option option-active">
+    <div>
+      <h2 class="option-title">Karachi</h2>
+      <p class="option-desc">Warm, coastal climate</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Lahore</h2>
+      <p class="option-desc">Seasonal temperature shifts</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Islamabad</h2>
+      <p class="option-desc">Cool winters, warm summers</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Other</h2>
+      <p class="option-desc">A city or town elsewhere in Pakistan</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="12 Planner — Step 03">
+  <div class="frame-label">12 Planner — Step 03</div>
+  <div class="screen-frame 12-Planner-Step-03" id="12-Planner-Step-03" data-name="12 Planner — Step 03" name="12 Planner — Step 03" aria-label="12 Planner — Step 03">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 03 of 09</span>
+          <span class="muted">33%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:33%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">Tell us about your space.</h1>
+        <p class="body muted mt-12">Plot size shapes how light, privacy and outdoor living can work.</p>
+        
+        <div class="options"><div class="option ">
+    <div>
+      <h2 class="option-title">Under 5 marla</h2>
+      <p class="option-desc">Compact urban plot</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option option-active">
+    <div>
+      <h2 class="option-title">5–10 marla</h2>
+      <p class="option-desc">A common family home size</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">10–20 marla</h2>
+      <p class="option-desc">Room to breathe and grow</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">1 kanal or more</h2>
+      <p class="option-desc">Generous grounds and gardens</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="13 Planner — Step 04">
+  <div class="frame-label">13 Planner — Step 04</div>
+  <div class="screen-frame 13-Planner-Step-04" id="13-Planner-Step-04" data-name="13 Planner — Step 04" name="13 Planner — Step 04" aria-label="13 Planner — Step 04">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 04 of 09</span>
+          <span class="muted">44%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:44%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">What climate challenge matters most?</h1>
+        <p class="body muted mt-12">A focused environmental priority helps shape early design conversations.</p>
+        
+        <div class="options"><div class="option option-active">
+    <div>
+      <h2 class="option-title">Intense heat</h2>
+      <p class="option-desc">Long, hot summers and solar gain</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Humidity</h2>
+      <p class="option-desc">Coastal moisture and still air</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Monsoon rains</h2>
+      <p class="option-desc">Heavy rain, drainage and damp</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Dust & haze</h2>
+      <p class="option-desc">Air quality and filtration needs</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Mild seasons</h2>
+      <p class="option-desc">Comfortable swings year-round</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="14 Planner — Step 05">
+  <div class="frame-label">14 Planner — Step 05</div>
+  <div class="screen-frame 14-Planner-Step-05" id="14-Planner-Step-05" data-name="14 Planner — Step 05" name="14 Planner — Step 05" aria-label="14 Planner — Step 05">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 05 of 09</span>
+          <span class="muted">56%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:56%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">Who will live here?</h1>
+        <p class="body muted mt-12">A home works better when it responds to everyone in it.</p>
+        
+        <div class="options"><div class="option ">
+    <div>
+      <h2 class="option-title">1–2 people</h2>
+      <p class="option-desc">A compact household</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option option-active">
+    <div>
+      <h2 class="option-title">3–5 people</h2>
+      <p class="option-desc">A growing family</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">6+ people</h2>
+      <p class="option-desc">A multi-generational home</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="15 Planner — Step 06">
+  <div class="frame-label">15 Planner — Step 06</div>
+  <div class="screen-frame 15-Planner-Step-06" id="15-Planner-Step-06" data-name="15 Planner — Step 06" name="15 Planner — Step 06" aria-label="15 Planner — Step 06">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 06 of 09</span>
+          <span class="muted">67%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:67%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">How do you use outdoor space?</h1>
+        <p class="body muted mt-12">Courtyards and roof spaces can become an extension of home.</p>
+        
+        <div class="options"><div class="option option-active">
+    <div>
+      <h2 class="option-title">Every day</h2>
+      <p class="option-desc">An essential living space</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">On weekends</h2>
+      <p class="option-desc">A place to gather and unwind</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Occasionally</h2>
+      <p class="option-desc">Useful when the weather is right</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="16 Planner — Step 07">
+  <div class="frame-label">16 Planner — Step 07</div>
+  <div class="screen-frame 16-Planner-Step-07" id="16-Planner-Step-07" data-name="16 Planner — Step 07" name="16 Planner — Step 07" aria-label="16 Planner — Step 07">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 07 of 09</span>
+          <span class="muted">78%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:78%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">What should the future hold?</h1>
+        <p class="body muted mt-12">Thinking ahead now can make change easier later.</p>
+        
+        <div class="options"><div class="option option-active">
+    <div>
+      <h2 class="option-title">A growing family</h2>
+      <p class="option-desc">Rooms that can adapt</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Working from home</h2>
+      <p class="option-desc">Flexible, quiet spaces</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Parents moving in</h2>
+      <p class="option-desc">Comfort across generations</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">No major changes</h2>
+      <p class="option-desc">A home complete as it is</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="17 Planner — Step 08">
+  <div class="frame-label">17 Planner — Step 08</div>
+  <div class="screen-frame 17-Planner-Step-08" id="17-Planner-Step-08" data-name="17 Planner — Step 08" name="17 Planner — Step 08" aria-label="17 Planner — Step 08">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 08 of 09</span>
+          <span class="muted">89%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:89%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">Your preferences</h1>
+        <p class="body muted mt-12">Choose the architectural direction closest to your taste.</p>
+        
+        <div class="options"><div class="option option-active">
+    <div>
+      <h2 class="option-title">Modern</h2>
+      <p class="option-desc">Clean lines and open spaces</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Traditional</h2>
+      <p class="option-desc">Familiar forms, thoughtfully updated</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Minimal</h2>
+      <p class="option-desc">Quiet materials and essential spaces</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Cultural</h2>
+      <p class="option-desc">Local craft, courtyards and character</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="18 Planner — Step 09">
+  <div class="frame-label">18 Planner — Step 09</div>
+  <div class="screen-frame 18-Planner-Step-09" id="18-Planner-Step-09" data-name="18 Planner — Step 09" name="18 Planner — Step 09" aria-label="18 Planner — Step 09">
+    <div class="screen flex-col">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front flex-col">
+      <header class="planner-top">
+        <p class="planner-brand">BuildWise</p>
+        <div class="close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+      </header>
+      <div class="px-20">
+        <div class="planner-meta">
+          <span>Step 09 of 09</span>
+          <span class="muted">100%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+      </div>
+      <section class="planner-body">
+        <h1 class="h1">Your priorities, considered.</h1>
+        <p class="body muted mt-12">Choose up to three areas to place at the heart of your plan.</p>
+        <p class="multi-note">2 of 3 selected</p>
+        <div class="options"><div class="option ">
+    <div>
+      <h2 class="option-title">Natural light</h2>
+      <p class="option-desc">Bright, uplifting spaces</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option option-active">
+    <div>
+      <h2 class="option-title">Ventilation</h2>
+      <p class="option-desc">Fresh air and natural cooling</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option option-active">
+    <div>
+      <h2 class="option-title">Energy efficiency</h2>
+      <p class="option-desc">Lower demand, smarter systems</p>
+    </div>
+    <span class="option-check option-check-active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Privacy</h2>
+      <p class="option-desc">Open, without feeling exposed</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Space</h2>
+      <p class="option-desc">Room that feels generous and clear</p>
+    </div>
+    <span class="option-check "></span>
+  </div><div class="option ">
+    <div>
+      <h2 class="option-title">Aesthetics</h2>
+      <p class="option-desc">A home that feels carefully composed</p>
+    </div>
+    <span class="option-check "></span>
+  </div></div>
+      </section>
+      <footer class="planner-footer">
+        <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back</span></div>
+        <div class="btn btn-default"><span>Continue</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="19 Processing">
+  <div class="frame-label">19 Processing</div>
+  <div class="screen-frame 19-Processing" id="19-Processing" data-name="19 Processing" name="19 Processing" aria-label="19 Processing">
+    <div class="screen processing">
+      <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+      <div class="screen-front processing-front">
+      <div class="processing-inner">
+        <p class="eyebrow primary">BuildWise</p>
+        <h1 class="h1 mt-24">Building your personalized recommendations…</h1>
+        <p class="body muted mt-16">Shaping a dummy guide from your location, climate, lifestyle and priorities.</p>
+        <div class="progress-track mt-40"><div class="progress-fill" style="width:64%"></div></div>
+        <p class="tiny strong muted mt-16">64%</p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="20 Guide — Ventilation">
+  <div class="frame-label">20 Guide — Ventilation</div>
+  <div class="screen-frame 20-Guide-Ventilation" id="20-Guide-Ventilation" data-name="20 Guide — Ventilation" name="20 Guide — Ventilation" aria-label="20 Guide — Ventilation">
+    <div class="screen flex-col">
+      <header class="screen-header ">
+    <div class="screen-header-left">
+      <div class="back-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
+      <h1 class="screen-header-title">Guide</h1>
+    </div>
+  </header>
+      <div class="content-scroll">
+        <div class="pad-x pt-24">
+          <p class="eyebrow primary">Climate & comfort</p>
+          <h1 class="h1 mt-12">Make natural airflow work for you.</h1>
+        </div>
+        <div class="photo photo-vent guide-img" style="width:390px;height:192px" role="img" aria-label="Architecture photo"></div>
+        <div class="guide-body">
+          <div class="grid-layer " data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+          <div class="screen-front">
+          <div>
+            <h2 class="h2">Why this matters</h2>
+            <p class="body muted mt-16 lh-28">Karachi homes can hold heat long after sunset. Thoughtful openings, shaded edges and a clear path for air help rooms feel comfortable with less reliance on cooling — especially when Intense heat is a priority.</p>
+          </div>
+          <div class="mt-40">
+            <p class="eyebrow primary">Things worth discussing</p>
+            <div class="discuss-list mt-16">
+              <div class="discuss-row">
+                <span class="num">01</span>
+                <span class="discuss-label">Window placement</span>
+              </div><div class="discuss-row">
+                <span class="num">02</span>
+                <span class="discuss-label">Cross ventilation</span>
+              </div><div class="discuss-row">
+                <span class="num">03</span>
+                <span class="discuss-label">Shading</span>
+              </div><div class="discuss-row">
+                <span class="num">04</span>
+                <span class="discuss-label">Room orientation</span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="tip-block">
+          <p class="tiny strong primary upper tracking">BuildWise tip</p>
+          <blockquote class="tip-quote">“Think about airflow during planning — not after construction.”</blockquote>
+          <div class="cta-stack mt-32">
+            <div class="btn btn-default"><span>Next consideration</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+            <div class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span>Back to plan</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="21 Final Plan">
+  <div class="frame-label">21 Final Plan</div>
+  <div class="screen-frame 21-Final-Plan" id="21-Final-Plan" data-name="21 Final Plan" name="21 Final Plan" aria-label="21 Final Plan">
+    <div class="screen flex-col inverse">
+      <header class="screen-header screen-header-inverse">
+    <div class="screen-header-left">
+      <div class="back-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
+      <h1 class="screen-header-title">Your plan</h1>
+    </div>
+  </header>
+      <div class="content-scroll final-body">
+        <div class="grid-layer grid-layer-dark" data-name="Plan grid" role="img" aria-label="Square plan grid">
+    <img class="grid-img" src="./assets/plan-grid.png" alt="Square plan grid" width="390" height="1400" />
+  </div>
+        <div class="screen-front">
+        <p class="eyebrow inverse-muted">BuildWise</p>
+        <h1 class="h1 mt-16">Your smarter home starts here.</h1>
+        <p class="body inverse-soft mt-16">A personalized planning guide based on your priorities.</p>
+        <div class="mt-40">
+          <p class="body inverse-soft">06 things to discuss before you build</p>
+          <div class="final-list mt-16">
+            <div class="final-row">
+              <span class="final-num">01</span>
+              <h2 class="final-title">Orientation</h2>
+            </div><div class="final-row">
+              <span class="final-num">02</span>
+              <h2 class="final-title">Natural Ventilation</h2>
+            </div><div class="final-row">
+              <span class="final-num">03</span>
+              <h2 class="final-title">Light & Sun</h2>
+            </div><div class="final-row">
+              <span class="final-num">04</span>
+              <h2 class="final-title">Materials</h2>
+            </div><div class="final-row">
+              <span class="final-num">05</span>
+              <h2 class="final-title">Spatial Considerations</h2>
+            </div><div class="final-row">
+              <span class="final-num">06</span>
+              <h2 class="final-title">Design Direction</h2>
+            </div>
+          </div>
+        </div>
+        <div class="cta-stack mt-40 pb-32">
+          <div class="btn btn-secondary"><span>Share with your architect</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+          <div class="btn btn-ghost-inverse"><span>Save my plan</span></div>
+          <div class="btn btn-ghost-inverse-soft"><span>Disclaimer</span></div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="frame" data-name="22 Disclaimer">
+  <div class="frame-label">22 Disclaimer</div>
+  <div class="screen-frame 22-Disclaimer" id="22-Disclaimer" data-name="22 Disclaimer" name="22 Disclaimer" aria-label="22 Disclaimer">
+    <div class="screen flex-col">
+      <header class="screen-header ">
+    <div class="screen-header-left">
+      <div class="back-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></div>
+      <h1 class="screen-header-title">Disclaimer</h1>
+    </div>
+  </header>
+      <div class="pad-x py-32">
+        <h1 class="h1">Please note</h1>
+        <div class="disclaimer-copy mt-24">
+          <p>BuildWise is a <strong>prototype</strong>. Recommendations are illustrative dummy content — not verified engineering or climate data.</p>
+          <p>This guide does <strong>not replace</strong> professional architectural, structural or engineering consultation.</p>
+          <p>Focused on residential use in selected Pakistani cities, with limited geographic coverage.</p>
+          <p>Your answers and account stay on this device for this demo. Nothing is sent to a server.</p>
+        </div>
+        <div class="mt-40"><div class="btn btn-default"><span>Got it</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</body>
+</html>

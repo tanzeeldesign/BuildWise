@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BuildWise — Color Palette</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: oklch(0.975 0.012 88);
+      --ink: oklch(0.19 0.012 75);
+      --ink-soft: oklch(0.49 0.018 75);
+      --line: oklch(0.86 0.014 88);
+      --card: oklch(1 0.004 88);
+      --primary: oklch(0.42 0.065 145);
+      --primary-fg: oklch(0.985 0.008 88);
+      --accent: oklch(0.91 0.035 145);
+      --accent-fg: oklch(0.33 0.06 145);
+      --inverse: oklch(0.24 0.02 76);
+      --secondary: oklch(0.93 0.018 88);
+      --muted: oklch(0.94 0.012 88);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Manrope", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, oklch(0.91 0.035 145 / 35%), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 0%, oklch(0.94 0.02 88 / 80%), transparent 50%),
+        linear-gradient(180deg, var(--bg), oklch(0.96 0.014 88));
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+    }
+
+    header {
+      display: grid;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+      animation: rise 0.7s ease both;
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 12ch;
+    }
+
+    .lede {
+      max-width: 38ch;
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .hero-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      height: clamp(7rem, 18vw, 11rem);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow:
+        0 1px 2px rgb(42 38 32 / 6%),
+        0 16px 40px rgb(42 38 32 / 10%);
+      animation: rise 0.7s ease 0.08s both;
+    }
+
+    .hero-strip span {
+      transition: flex 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      flex: 1;
+    }
+
+    .hero-strip:hover span { flex: 0.85; }
+    .hero-strip:hover span:hover { flex: 1.6; }
+
+    .hero-strip {
+      display: flex;
+    }
+
+    section {
+      margin-top: 3.25rem;
+      animation: rise 0.7s ease both;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.12s; }
+    section:nth-of-type(2) { animation-delay: 0.2s; }
+    section:nth-of-type(3) { animation-delay: 0.28s; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 550;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .swatch {
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      overflow: hidden;
+      background: var(--card);
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      transition:
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .swatch:hover,
+    .swatch:focus-visible {
+      transform: translateY(-3px);
+      border-color: oklch(0.75 0.02 88);
+      box-shadow: 0 10px 28px rgb(42 38 32 / 10%);
+      outline: none;
+    }
+
+    .swatch:active { transform: translateY(-1px); }
+
+    .chip {
+      height: 5.5rem;
+      position: relative;
+    }
+
+    .chip::after {
+      content: "Copy";
+      position: absolute;
+      inset: auto 0.65rem 0.55rem auto;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.5rem;
+      border-radius: 999px;
+      background: rgb(255 255 255 / 72%);
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .swatch:hover .chip::after,
+    .swatch:focus-visible .chip::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .swatch.copied .chip::after {
+      content: "Copied";
+      background: var(--primary);
+      color: var(--primary-fg);
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .meta {
+      padding: 0.85rem 0.95rem 1rem;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .meta strong {
+      font-size: 0.92rem;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+
+    .meta code {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      word-break: break-all;
+    }
+
+    .pairs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .pair {
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      overflow: hidden;
+      background: var(--card);
+      min-height: 8.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.35rem 1.25rem;
+      animation: rise 0.6s ease both;
+    }
+
+    .pair .label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .pair .sample {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 550;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .pair .sample small {
+      display: block;
+      margin-top: 0.35rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.5rem;
+      transform: translateX(-50%) translateY(120%);
+      background: var(--inverse);
+      color: oklch(0.96 0.01 88);
+      padding: 0.7rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 12px 32px rgb(0 0 0 / 18%);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    footer {
+      margin-top: 3.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-size: 0.8rem;
+      font-weight: 500;
+      animation: rise 0.7s ease 0.35s both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 2.25rem 1.15rem 4rem; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+      .hero-strip { height: 6.5rem; border-radius: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">BuildWise design system</p>
+      <h1>Color palette</h1>
+      <p class="lede">Warm paper, forest green, and quiet neutrals — the calm architectural language of BuildWise.</p>
+    </header>
+
+    <div class="hero-strip" aria-hidden="true">
+      <span style="background: oklch(0.42 0.065 145)"></span>
+      <span style="background: oklch(0.91 0.035 145)"></span>
+      <span style="background: oklch(0.975 0.012 88)"></span>
+      <span style="background: oklch(0.49 0.018 75)"></span>
+      <span style="background: oklch(0.24 0.02 76)"></span>
+    </div>
+
+    <section>
+      <div class="section-head">
+        <h2>Brand & surfaces</h2>
+        <p>Click any swatch to copy its OKLCH value</p>
+      </div>
+      <div class="grid" id="brand"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>UI tokens</h2>
+        <p>Mapped from <code>src/styles.css</code></p>
+      </div>
+      <div class="grid" id="tokens"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Pairings</h2>
+        <p>How type sits on color</p>
+      </div>
+      <div class="pairs">
+        <div class="pair" style="background: oklch(0.42 0.065 145); color: oklch(0.985 0.008 88)">
+          <span class="label">Primary on forest</span>
+          <p class="sample">Build smarter.<small>Before you build.</small></p>
+        </div>
+        <div class="pair" style="background: oklch(0.975 0.012 88); color: oklch(0.19 0.012 75)">
+          <span class="label">Ink on paper</span>
+          <p class="sample">Courtyard light.<small>Quiet, editorial, restrained.</small></p>
+        </div>
+        <div class="pair" style="background: oklch(0.91 0.035 145); color: oklch(0.33 0.06 145)">
+          <span class="label">Accent on mint</span>
+          <p class="sample">Climate first.<small>Orientation · Ventilation · Daylight</small></p>
+        </div>
+        <div class="pair" style="background: oklch(0.24 0.02 76); color: oklch(0.96 0.01 88)">
+          <span class="label">Inverse night</span>
+          <p class="sample">Architect-ready.<small>Share the plan before construction.</small></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>Tokens mirror the live BuildWise theme. Open this file in a browser to browse and copy colors.</footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+  <script>
+    const brand = [
+      { name: "Forest", token: "primary", value: "oklch(0.42 0.065 145)", hex: "#3F5A3A" },
+      { name: "Mint mist", token: "accent", value: "oklch(0.91 0.035 145)", hex: "#D4E6D0" },
+      { name: "Warm paper", token: "background", value: "oklch(0.975 0.012 88)", hex: "#F7F4EC" },
+      { name: "Ink", token: "foreground", value: "oklch(0.19 0.012 75)", hex: "#2A2620" },
+      { name: "Charcoal", token: "inverse", value: "oklch(0.24 0.02 76)", hex: "#35312B" },
+    ];
+
+    const tokens = [
+      { name: "Card", token: "card", value: "oklch(1 0.004 88)", hex: "#FFFEFA" },
+      { name: "Secondary", token: "secondary", value: "oklch(0.93 0.018 88)", hex: "#EBE6DA" },
+      { name: "Muted", token: "muted", value: "oklch(0.94 0.012 88)", hex: "#EEEAE2" },
+      { name: "Muted text", token: "muted-foreground", value: "oklch(0.49 0.018 75)", hex: "#736B5F" },
+      { name: "Border", token: "border", value: "oklch(0.86 0.014 88)", hex: "#D4CEC2" },
+      { name: "Accent ink", token: "accent-foreground", value: "oklch(0.33 0.06 145)", hex: "#2F4A2C" },
+      { name: "Primary fg", token: "primary-foreground", value: "oklch(0.985 0.008 88)", hex: "#FAF8F2" },
+      { name: "Ring", token: "ring", value: "oklch(0.42 0.065 145)", hex: "#3F5A3A" },
+    ];
+
+    const toast = document.getElementById("toast");
+    let toastTimer;
+
+    function render(list, rootId) {
+      const root = document.getElementById(rootId);
+      root.innerHTML = list.map((c) => `
+        <button class="swatch" type="button" data-value="${c.value}" aria-label="Copy ${c.name}">
+          <div class="chip" style="background:${c.value}"></div>
+          <div class="meta">
+            <strong>${c.name}</strong>
+            <code>${c.token}</code>
+            <code>${c.value}</code>
+            <code>${c.hex}</code>
+          </div>
+        </button>
+      `).join("");
+    }
+
+    function copy(value, btn) {
+      navigator.clipboard.writeText(value).then(() => {
+        btn.classList.add("copied");
+        toast.textContent = `Copied ${value}`;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+          btn.classList.remove("copied");
+        }, 1400);
+      });
+    }
+
+    render(brand, "brand");
+    render(tokens, "tokens");
+
+    document.querySelectorAll(".swatch").forEach((btn) => {
+      btn.addEventListener("click", () => copy(btn.dataset.value, btn));
+    });
+  </script>
+</body>
+</html>

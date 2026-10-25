@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from "react";
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,13 +28,16 @@ export function SignIn({ onBack, onSuccess, onGoSignUp }: SignInProps) {
   };
 
   return (
-    <main className="flex h-full min-h-full flex-1 flex-col bg-background">
-      <ScreenHeader title="Sign in" onBack={onBack} />
-      <form onSubmit={submit} className="flex flex-1 flex-col px-5 pb-8 pt-6">
-        <p className="text-sm text-muted-foreground">Welcome back. Use the account you created on this device.</p>
+    <main className="bw-page fade-in">
+      <ScreenHeader title="Sign In" onBack={onBack} />
+      <form onSubmit={submit} className="bw-pad-x flex flex-1 flex-col pb-10 pt-2">
+        <p className="bw-body">Enter your details to sign in.</p>
+
         <div className="mt-8 space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm font-medium">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -46,7 +48,9 @@ export function SignIn({ onBack, onSuccess, onGoSignUp }: SignInProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm font-medium">
+              Password
+            </Label>
             <Input
               id="password"
               type="password"
@@ -57,14 +61,27 @@ export function SignIn({ onBack, onSuccess, onGoSignUp }: SignInProps) {
             />
           </div>
         </div>
-        {error && <p className="mt-4 text-sm font-medium text-red-800">{error}</p>}
-        <div className="mt-auto flex flex-col gap-3 pt-10">
+
+        {error && (
+          <p className="mt-4 text-sm font-medium text-red-800" role="alert">
+            {error}
+          </p>
+        )}
+
+        <div className="mt-auto flex flex-col items-center gap-5 pt-12">
           <Button type="submit" size="lg" className="w-full">
-            Sign in <ArrowRight />
+            Sign In
           </Button>
-          <Button type="button" variant="ghost" size="lg" className="w-full" onClick={onGoSignUp}>
-            Need an account? Sign up
-          </Button>
+          <p className="text-sm text-muted-foreground">
+            Don’t have an account?{" "}
+            <button
+              type="button"
+              onClick={onGoSignUp}
+              className="font-bold text-foreground underline-offset-2 hover:underline"
+            >
+              Sign Up
+            </button>
+          </p>
         </div>
       </form>
     </main>

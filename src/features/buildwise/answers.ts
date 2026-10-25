@@ -1,28 +1,22 @@
 import type { Answers } from "./types";
 
+/** @deprecated Prefer plans store — kept for migration/tests. */
 export const STORAGE_KEY = "buildwise-answers";
 
 export const emptyAnswers: Answers = {};
 
-export function loadAnswers(): Answers {
-  if (typeof window === "undefined") return emptyAnswers;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return emptyAnswers;
-    const parsed = JSON.parse(raw) as Answers;
-    return {
-      ...emptyAnswers,
-      ...parsed,
-      priorities: Array.isArray(parsed.priorities) ? parsed.priorities : [],
-    };
-  } catch {
-    return emptyAnswers;
+/** Normalize multi-select fields; also accepts legacy single-string climate. */
+export function asStringList(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.filter((v): v is string => typeof v === "string" && Boolean(v.trim()));
   }
+  if (typeof value === "string" && value.trim()) return [value.trim()];
+  return [];
 }
 
-export function saveAnswers(answers: Answers) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+export function formatAnswerList(value: unknown, fallback = "—"): string {
+  const list = asStringList(value);
+  return list.length ? list.join(" · ") : fallback;
 }
 
 export function hasCompletedPlan(answers: Answers): boolean {
@@ -30,12 +24,11 @@ export function hasCompletedPlan(answers: Answers): boolean {
     answers.project &&
       answers.location &&
       answers.plot &&
-      answers.climate &&
+      asStringList(answers.climate).length > 0 &&
       answers.family &&
       answers.outdoor &&
       answers.future &&
       answers.style &&
-      answers.priorities &&
-      answers.priorities.length > 0,
+      asStringList(answers.priorities).length > 0,
   );
 }

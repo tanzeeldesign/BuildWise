@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { hasCompletedPlan, loadAnswers, saveAnswers } from "@/features/buildwise/answers";
+import { emptyAnswers, hasCompletedPlan } from "@/features/buildwise/answers";
 import {
   loadSession,
   markSplashSeen,
   signOut,
   splashSeenThisSession,
 } from "@/features/buildwise/auth";
+import { ChoosePlan } from "@/features/buildwise/components/ChoosePlan";
 import { Disclaimer } from "@/features/buildwise/components/Disclaimer";
 import { FinalPlan } from "@/features/buildwise/components/FinalPlan";
 import { GetStarted } from "@/features/buildwise/components/GetStarted";
@@ -17,16 +18,52 @@ import { PhoneShell } from "@/features/buildwise/components/PhoneShell";
 import { PlanHub } from "@/features/buildwise/components/PlanHub";
 import { Planner } from "@/features/buildwise/components/Planner";
 import { Processing } from "@/features/buildwise/components/Processing";
+import { EditProfile } from "@/features/buildwise/components/EditProfile";
 import { Profile } from "@/features/buildwise/components/Profile";
 import { SignIn } from "@/features/buildwise/components/SignIn";
 import { SignUp } from "@/features/buildwise/components/SignUp";
 import { Splash } from "@/features/buildwise/components/Splash";
+import {
+  addPlan,
+  completedCount,
+  createEmptyPlan,
+  getActivePlan,
+  getHomeFocusPlan,
+  getPlan,
+  isTopicComplete,
+  loadPlansStore,
+  planProgress,
+  removePlan,
+  savePlansStore,
+  setActivePlanId,
+  toggleTopicComplete,
+  upsertPlanAnswers,
+} from "@/features/buildwise/plans";
 import { buildPlan } from "@/features/buildwise/recommendations";
-import type { Answers, Session, Tab, TopicId, View } from "@/features/buildwise/types";
+import {
+  loadSubscription,
+  migrateSubscriptionEmail,
+  saveSubscription,
+} from "@/features/buildwise/subscription";
+import type {
+  Answers,
+  PlanTabMode,
+  PlansStore,
+  Session,
+  SubscriptionId,
+  SubscriptionRecord,
+  Tab,
+  TopicId,
+  View,
+} from "@/features/buildwise/types";
+import { TOTAL_STEPS } from "@/features/buildwise/questions";
 
 function initialView(): View {
   if (typeof window === "undefined") return "splash";
-  if (loadSession()) return "home";
+  const session = loadSession();
+  if (session) {
+    return loadSubscription(session.email) ? "home" : "choose-plan";
+  }
   if (splashSeenThisSession()) return "get-started";
   return "splash";
 }
@@ -52,24 +89,89 @@ export const Route = createFileRoute("/")({
 });
 
 const TAB_VIEWS: Tab[] = ["home", "plan", "profile"];
-const STACK_VIEWS: View[] = ["planner", "processing", "guide", "final-plan", "disclaimer"];
+const STACK_VIEWS: View[] = [
+  "planner",
+  "processing",
+  "guide",
+  "final-plan",
+  "disclaimer",
+  "choose-plan",
+  "edit-profile",
+];
+
+function firstIncompleteStep(answers: Answers): number {
+  const keys = [
+    "project",
+    "location",
+    "plot",
+    "climate",
+    "family",
+    "outdoor",
+    "future",
+    "style",
+    "priorities",
+  ] as const;
+  for (let i = 0; i < keys.length; i += 1) {
+    const key = keys[i]!;
+    if (key === "priorities" || key === "climate") {
+      if (!answers[key]?.length) return i;
+    } else if (!answers[key]?.trim()) {
+      return i;
+    }
+  }
+  return 0;
+}
 
 function BuildWise() {
   const [view, setView] = useState<View>(initialView);
   const [tab, setTab] = useState<Tab>("home");
   const [session, setSession] = useState<Session | null>(() => loadSession());
+  const [store, setStoreState] = useState<PlansStore>(() => loadPlansStore());
+  const [planMode, setPlanMode] = useState<PlanTabMode>("list");
   const [step, setStep] = useState(0);
-  const [answers, setAnswersState] = useState<Answers>(() => loadAnswers());
   const [topicId, setTopicId] = useState<TopicId>("ventilation");
   const [stackReturn, setStackReturn] = useState<Tab>("plan");
+  const [editingPlanId, setEditingPlanId] = useState<string | null>(null);
+  const [subscription, setSubscription] = useState<SubscriptionRecord | null>(() => {
+    const s = loadSession();
+    return s ? loadSubscription(s.email) : null;
+  });
+  const [planChooserMode, setPlanChooserMode] = useState<"onboarding" | "settings">(
+    "onboarding",
+  );
 
-  const setAnswers = useCallback((next: Answers) => {
-    setAnswersState(next);
-    saveAnswers(next);
+  const updateStore = useCallback((recipe: (prev: PlansStore) => PlansStore) => {
+    setStoreState((prev) => {
+      const next = recipe(prev);
+      savePlansStore(next);
+      return next;
+    });
   }, []);
 
-  const plan = useMemo(() => buildPlan(answers), [answers]);
-  const completed = hasCompletedPlan(answers);
+  const activePlan = useMemo(() => getActivePlan(store), [store]);
+  const focusPlan = useMemo(() => getHomeFocusPlan(store), [store]);
+  const editingPlan = useMemo(
+    () => getPlan(store, editingPlanId) ?? activePlan,
+    [store, editingPlanId, activePlan],
+  );
+  const answers = editingPlan?.answers ?? emptyAnswers;
+  const built = useMemo(
+    () => (activePlan && hasCompletedPlan(activePlan.answers) ? buildPlan(activePlan.answers) : null),
+    [activePlan],
+  );
+  const guideBuilt = useMemo(() => buildPlan(activePlan?.answers ?? emptyAnswers), [activePlan]);
+  const readyCount = useMemo(() => completedCount(store), [store]);
+
+  const setAnswers = useCallback(
+    (next: Answers) => {
+      updateStore((prev) => {
+        const planId = editingPlanId ?? prev.activePlanId;
+        if (!planId) return prev;
+        return upsertPlanAnswers(prev, planId, next);
+      });
+    },
+    [editingPlanId, updateStore],
+  );
 
   const scrollTop = () => {
     const scroller = document.querySelector("[data-phone-scroll]");
@@ -85,6 +187,7 @@ function BuildWise() {
   const goTab = useCallback((next: Tab) => {
     setTab(next);
     setView(next);
+    if (next === "plan") setPlanMode("list");
     requestAnimationFrame(scrollTop);
   }, []);
 
@@ -108,18 +211,115 @@ function BuildWise() {
     [openStack],
   );
 
-  const startPlanner = useCallback(
-    (from: Tab = "home") => {
+  const openPlanDetail = useCallback(
+    (planId: string) => {
+      updateStore((prev) => setActivePlanId(prev, planId));
+      setPlanMode("detail");
+      setTab("plan");
+      setView("plan");
+      requestAnimationFrame(scrollTop);
+    },
+    [updateStore],
+  );
+
+  const startNewPlan = useCallback(
+    (from: Tab = "home", name?: string) => {
+      const trimmed = name?.trim();
+      const plan = createEmptyPlan(
+        trimmed ? { name: trimmed, nameIsCustom: true } : undefined,
+      );
+      updateStore((prev) => addPlan(prev, plan));
+      setEditingPlanId(plan.id);
+      setStep(0);
+      setPlanMode("list");
+      openStack("planner", from);
+    },
+    [openStack, updateStore],
+  );
+
+  const continuePlan = useCallback(
+    (planId: string, from: Tab = "home") => {
+      const plan = getPlan(store, planId);
+      if (!plan) return;
+      updateStore((prev) => setActivePlanId(prev, planId));
+      setEditingPlanId(planId);
+      setStep(firstIncompleteStep(plan.answers));
+      openStack("planner", from);
+    },
+    [openStack, store, updateStore],
+  );
+
+  const editPlanAnswers = useCallback(
+    (planId: string, from: Tab = "plan") => {
+      const plan = getPlan(store, planId);
+      if (!plan) return;
+      updateStore((prev) => setActivePlanId(prev, planId));
+      setEditingPlanId(planId);
       setStep(0);
       openStack("planner", from);
     },
-    [openStack],
+    [openStack, store, updateStore],
+  );
+
+  const deletePlan = useCallback(
+    (planId: string) => {
+      const plan = getPlan(store, planId);
+      if (!plan) return;
+      const label = plan.name;
+      if (
+        typeof window !== "undefined" &&
+        !window.confirm(`Delete “${label}”? This can’t be undone.`)
+      ) {
+        return;
+      }
+      updateStore((prev) => {
+        const next = removePlan(prev, planId);
+        setEditingPlanId((current) => (current === planId ? next.activePlanId : current));
+        return next;
+      });
+      setPlanMode("list");
+      requestAnimationFrame(scrollTop);
+    },
+    [store, updateStore],
+  );
+
+  const openPlanChooser = useCallback(
+    (mode: "onboarding" | "settings", from: Tab = "profile") => {
+      setPlanChooserMode(mode);
+      if (mode === "settings") {
+        openStack("choose-plan", from);
+      } else {
+        go("choose-plan");
+      }
+    },
+    [go, openStack],
+  );
+
+  const applySubscription = useCallback(
+    (tierId: SubscriptionId) => {
+      if (!session) return;
+      const record = saveSubscription(session.email, tierId);
+      setSubscription(record);
+      if (planChooserMode === "settings") {
+        closeStack();
+      } else {
+        go("home");
+      }
+    },
+    [closeStack, go, planChooserMode, session],
   );
 
   const onAuthSuccess = useCallback(
     (next: Session) => {
       setSession(next);
-      go("home");
+      const existing = loadSubscription(next.email);
+      setSubscription(existing);
+      if (existing) {
+        go("home");
+      } else {
+        setPlanChooserMode("onboarding");
+        go("choose-plan");
+      }
     },
     [go],
   );
@@ -127,6 +327,7 @@ function BuildWise() {
   const onSignOut = useCallback(() => {
     signOut();
     setSession(null);
+    setSubscription(null);
     go("get-started");
   }, [go]);
 
@@ -135,7 +336,8 @@ function BuildWise() {
     go("get-started");
   }, [go]);
 
-  const showTabs = Boolean(session) && TAB_VIEWS.includes(view as Tab) && !STACK_VIEWS.includes(view);
+  const showTabs =
+    Boolean(session) && TAB_VIEWS.includes(view as Tab) && !STACK_VIEWS.includes(view);
 
   let content: ReactNode = null;
 
@@ -165,29 +367,43 @@ function BuildWise() {
   } else if (view === "planner") {
     content = (
       <Planner
-        step={step}
+        step={Math.min(step, TOTAL_STEPS - 1)}
         setStep={setStep}
         answers={answers}
         setAnswers={setAnswers}
         onExit={closeStack}
-        onDone={() => openStack("processing", stackReturn)}
+        onDone={() => {
+          if (editingPlanId) {
+            updateStore((prev) => setActivePlanId(prev, editingPlanId));
+          }
+          openStack("processing", stackReturn);
+        }}
       />
     );
   } else if (view === "processing") {
     content = (
       <Processing
         onDone={() => {
+          setPlanMode("detail");
           setTab("plan");
-          go("plan");
+          openGuide(guideBuilt.topTopicId, "plan");
         }}
       />
     );
   } else if (view === "guide") {
+    const guideProgress = activePlan ? planProgress(activePlan) : null;
     content = (
       <Guide
-        answers={answers}
-        plan={plan}
+        answers={activePlan?.answers ?? emptyAnswers}
+        plan={guideBuilt}
         topicId={topicId}
+        isComplete={activePlan ? isTopicComplete(activePlan, topicId) : false}
+        guidesDone={guideProgress?.guidesDone ?? 0}
+        guidesTotal={guideProgress?.guidesTotal ?? 6}
+        onToggleComplete={() => {
+          if (!activePlan) return;
+          updateStore((prev) => toggleTopicComplete(prev, activePlan.id, topicId));
+        }}
         onBack={closeStack}
         openGuide={(id) => {
           setTopicId(id);
@@ -196,21 +412,60 @@ function BuildWise() {
       />
     );
   } else if (view === "final-plan") {
-    content = (
+    content = built ? (
       <FinalPlan
-        plan={plan}
+        plan={built}
         onBack={closeStack}
         onDisclaimer={() => openStack("disclaimer", stackReturn)}
       />
+    ) : (
+      <Disclaimer onBack={closeStack} />
     );
   } else if (view === "disclaimer") {
     content = <Disclaimer onBack={closeStack} />;
+  } else if (view === "edit-profile" && session) {
+    content = (
+      <EditProfile
+        session={session}
+        onBack={closeStack}
+        onSaved={(next) => {
+          if (next.email !== session.email) {
+            migrateSubscriptionEmail(session.email, next.email);
+          }
+          setSession(next);
+          setSubscription(loadSubscription(next.email));
+          closeStack();
+        }}
+      />
+    );
+  } else if (view === "choose-plan") {
+    content = (
+      <ChoosePlan
+        mode={planChooserMode}
+        current={subscription}
+        onSelect={applySubscription}
+        {...(planChooserMode === "settings" ? { onBack: closeStack } : {})}
+        {...(planChooserMode === "onboarding"
+          ? { onSkipFree: () => applySubscription("free") }
+          : {})}
+      />
+    );
   } else if (view === "plan") {
     content = (
       <PlanHub
-        plan={plan}
-        hasPlan={completed}
-        onStartPlanning={() => startPlanner("plan")}
+        mode={planMode}
+        plans={store.plans}
+        activePlan={activePlan}
+        built={built}
+        onOpenPlan={openPlanDetail}
+        onBackToList={() => {
+          setPlanMode("list");
+          requestAnimationFrame(scrollTop);
+        }}
+        onStartNewPlan={(name) => startNewPlan("plan", name)}
+        onContinuePlan={(id) => continuePlan(id, "plan")}
+        onEditAnswers={(id) => editPlanAnswers(id, "plan")}
+        onDeletePlan={deletePlan}
         onOpenGuide={(id) => openGuide(id, "plan")}
         onOpenFinalPlan={() => openStack("final-plan", "plan")}
       />
@@ -219,10 +474,9 @@ function BuildWise() {
     content = (
       <Profile
         session={session}
-        plan={plan}
-        hasPlan={completed}
-        onEdit={() => startPlanner("profile")}
-        onStartPlanning={() => startPlanner("profile")}
+        subscription={subscription}
+        onManageSubscription={() => openPlanChooser("settings", "profile")}
+        onEditProfile={() => openStack("edit-profile", "profile")}
         onDisclaimer={() => openStack("disclaimer", "profile")}
         onSignOut={onSignOut}
       />
@@ -231,17 +485,23 @@ function BuildWise() {
     content = (
       <Home
         session={session}
-        plan={plan}
-        hasPlan={completed}
-        onStartPlanning={() => startPlanner("home")}
-        onOpenPlan={() => goTab("plan")}
-        onOpenGuide={(id) => openGuide(id, "home")}
+        focusPlan={focusPlan}
+        planCount={store.plans.length}
+        completedCount={readyCount}
+        onOpenPlan={openPlanDetail}
+        onContinuePlan={(id) => continuePlan(id, "home")}
+        onStartNewPlan={(name) => startNewPlan("home", name)}
+        onBrowsePlans={() => goTab("plan")}
       />
     );
   }
 
   return (
-    <PhoneShell footer={showTabs ? <MobileTabBar active={tab} onChange={goTab} /> : undefined}>
+    <PhoneShell
+      scrollable={view !== "profile"}
+      gridBackground={view === "home" || view === "plan" || view === "profile"}
+      footer={showTabs ? <MobileTabBar active={tab} onChange={goTab} /> : undefined}
+    >
       {content}
     </PhoneShell>
   );

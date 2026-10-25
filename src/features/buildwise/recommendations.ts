@@ -1,3 +1,4 @@
+import { asStringList, formatAnswerList } from "./answers";
 import type { Answers, BuiltPlan, TopicContent, TopicId } from "./types";
 
 const cityClimate: Record<string, string> = {
@@ -7,89 +8,124 @@ const cityClimate: Record<string, string> = {
   Other: "local climate conditions",
 };
 
-export const topicCatalog: Record<TopicId, Omit<TopicContent, "why" | "hero"> & { whyTemplate: string; heroTemplate: string }> = {
+type CatalogEntry = Omit<TopicContent, "why" | "hero"> & {
+  whyTemplate: string;
+  heroTemplate: string;
+};
+
+export const topicCatalog: Record<TopicId, CatalogEntry> = {
   orientation: {
     id: "orientation",
     number: "01",
     title: "Orientation",
     cardTitle: "Orientation",
-    blurb: "How sunlight and positioning can influence comfort.",
-    label: "Site & sun",
-    heroTemplate: "Face the sun with intention.",
+    blurb: "Plan rooms around sunlight, shade, and comfort.",
+    label: "Site & climate",
+    heroTemplate: "Let orientation work for your home in {location}.",
     whyTemplate:
-      "In {location}, plot orientation shapes which rooms catch morning light, afternoon heat and prevailing breezes. Getting this right early reduces uncomfortable spaces later.",
-    discuss: ["Plot facing and road edge", "Morning vs afternoon rooms", "Shade on west façades", "Courtyard placement"],
-    tip: "Decide room placement with the sun path — not only with the street view.",
+      "On your {plot} plot in {location}, orientation affects sunlight and heat. Factor in local conditions, your {style} style, and your {family} household before locking the layout.",
+    discuss: [
+      "How does the plot’s direction affect sunlight and afternoon heat?",
+      "Which rooms need morning light or less direct sun?",
+      "Where can shading improve comfort without blocking useful daylight?",
+      "How should the layout respond to neighbors, privacy, and outdoor space?",
+    ],
+    tip: "Check the sun’s path and plot orientation before fixing the layout.",
     planLabel: "Orientation",
   },
   ventilation: {
     id: "ventilation",
     number: "02",
     title: "Ventilation",
-    cardTitle: "Ventilation",
-    blurb: "Plan natural airflow before you rely on mechanical cooling.",
+    cardTitle: "Natural Ventilation",
+    blurb: "Improve airflow with smarter window placement.",
     label: "Climate & comfort",
-    heroTemplate: "Make natural airflow work for you.",
+    heroTemplate: "Make natural airflow work in {location}.",
     whyTemplate:
-      "{location} homes can hold heat long after sunset. Thoughtful openings, shaded edges and a clear path for air help rooms feel comfortable with less reliance on cooling — especially when {climate} is a priority.",
-    discuss: ["Window placement", "Cross ventilation", "Shading", "Room orientation"],
-    tip: "Think about airflow during planning — not after construction.",
+      "With {climate} as a focus, ventilation matters early. In {location}, airflow depends on wind, layout, and windows. Plan for comfort for your {family} household and {style} style.",
+    discuss: [
+      "Can windows support cross-ventilation in key rooms?",
+      "How will nearby buildings and wind affect airflow?",
+      "Where do shading, privacy, and insect protection matter too?",
+      "When is mechanical cooling better than open windows?",
+    ],
+    tip: "Window count isn’t everything — placement and airflow paths matter more.",
     planLabel: "Natural Ventilation",
   },
   sunlight: {
     id: "sunlight",
     number: "03",
     title: "Sunlight",
-    cardTitle: "Sunlight",
-    blurb: "Plan daylight into the spaces you use most.",
-    label: "Light & day",
-    heroTemplate: "Bring daylight where you live.",
+    cardTitle: "Natural Light",
+    blurb: "Bring useful daylight into the rooms you use most.",
+    label: "Light & wellbeing",
+    heroTemplate: "Bring daylight into everyday spaces in your {style} home.",
     whyTemplate:
-      "Natural light changes how a {style} home feels through the day. For a {plot} plot in {location}, window size, depth and shading decide whether rooms feel bright or harsh.",
-    discuss: ["Daylit living areas", "Glare control", "Skylights and courts", "Evening room comfort"],
-    tip: "Bright is not always better — aim for usable daylight without overheating.",
+      "Your {style} style and light priorities make daylight important. In {location}, orientation, neighbors, windows, and shading shape how light reaches rooms. Consider how your {family} household uses each space.",
+    discuss: [
+      "Which rooms need morning or indirect daylight most?",
+      "How can windows balance daylight with heat and glare?",
+      "Could courtyards or skylights light deeper rooms?",
+      "How do privacy and neighbors affect daylight without blocking it?",
+    ],
+    tip: "Plan daylight around how rooms are used — not just window size.",
     planLabel: "Light & Sun",
   },
   materials: {
     id: "materials",
     number: "04",
     title: "Materials",
-    cardTitle: "Materials",
-    blurb: "Suggest finishes that suit climate, maintenance and character.",
-    label: "Fabric & finish",
-    heroTemplate: "Choose materials that work with the climate.",
+    cardTitle: "Materials & Protection",
+    blurb: "Choose materials for comfort, durability, and upkeep.",
+    label: "Materials & durability",
+    heroTemplate: "Choose materials that suit conditions in {location}.",
     whyTemplate:
-      "Dummy material guidance for {location}: thermal mass, breathable finishes and locally familiar options matter when dealing with {climate}. A {style} direction still needs practical envelopes.",
-    discuss: ["Wall and roof insulation", "Breathable finishes", "Flooring for heat", "Maintenance reality"],
-    tip: "Beautiful materials fail if they fight the climate — match look to performance.",
+      "With {climate} in mind, materials and protection are worth discussing early. Choices depend on exposure, quality, upkeep, and budget — and should fit your {location} home and {style} style.",
+    discuss: [
+      "Which roof and wall assemblies suit the local climate?",
+      "What waterproofing and drainage fit this plot’s exposure?",
+      "Which finishes handle weather, dust, moisture, and daily use?",
+      "How do cost, upkeep, durability, and repairs compare?",
+    ],
+    tip: "Compare materials by long-term performance and upkeep, not just price or looks.",
     planLabel: "Materials",
   },
   spatial: {
     id: "spatial",
     number: "05",
-    title: "Spatial",
-    cardTitle: "Spatial considerations",
-    blurb: "Shape rooms around family life, privacy and outdoor use.",
-    label: "Plan & living",
-    heroTemplate: "Plan spaces for how you actually live.",
+    title: "Spatial considerations",
+    cardTitle: "Space & Privacy",
+    blurb: "Make your space work for your household and future.",
+    label: "Space & everyday living",
+    heroTemplate: "Make every part of your {plot} home work harder.",
     whyTemplate:
-      "With {family} and outdoor use “{outdoor}”, circulation, privacy and shared rooms need early attention. Future needs like “{future}” should leave room to adapt.",
-    discuss: ["Public vs private zones", "Flexible rooms", "Outdoor connections", "Storage and service"],
-    tip: "A plan that fits daily life beats a plan that only looks good in drawings.",
+      "Your {plot} plot and {family} household call for efficient planning. Balance circulation, privacy, storage, and room sizes. Factor in {outdoor} outdoor use and plans for {future}.",
+    discuss: [
+      "How should the layout balance rooms, circulation, and storage?",
+      "Which spaces need more privacy or quieter separation?",
+      "How should indoor spaces connect to outdoor areas?",
+      "Can the layout adapt as family needs change?",
+    ],
+    tip: "Plan around daily routines and furniture before locking room sizes.",
     planLabel: "Spatial Considerations",
   },
   "design-direction": {
     id: "design-direction",
     number: "06",
     title: "Design direction",
-    cardTitle: "Design direction",
-    blurb: "Align architecture with the character you want at home.",
-    label: "Character & form",
-    heroTemplate: "Set a clear design direction.",
+    cardTitle: "Design Direction",
+    blurb: "Align your style with practical, lasting choices.",
+    label: "Design & identity",
+    heroTemplate: "Give your {style} home a clear direction.",
     whyTemplate:
-      "Your preference for {style} gives architects a shared language — from openings and materials to courtyard character — while still responding to {location} and a {plot} site.",
-    discuss: ["Façade language", "Indoor–outdoor threshold", "Material palette", "Cultural cues"],
-    tip: "A clear design direction saves months of mismatched revisions later.",
+      "Your {style} preference is a starting point. Turn it into practical choices for layout, materials, openings, and finishes. In {location}, also respond to local conditions and your {family} household.",
+    discuss: [
+      "Which features express the style without hurting function?",
+      "How can materials, colors, and finishes stay consistent?",
+      "How do you balance aesthetics with light, air, privacy, and upkeep?",
+      "What deserves investment now vs. simpler alternatives?",
+    ],
+    tip: "Set a clear design direction early so every choice stays coherent.",
     planLabel: "Design Direction",
   },
 };
@@ -120,15 +156,49 @@ const topicOrder: TopicId[] = [
   "design-direction",
 ];
 
+const PLACEHOLDER_DEFAULTS = {
+  location: "your city",
+  climate: "your climate",
+  style: "your preferred",
+  plot: "your",
+  family: "your household",
+  outdoor: "occasionally",
+  future: "future change",
+} as const;
+
+function textOr(value: string | undefined, fallback: string): string {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : fallback;
+}
+
+function climatePhrase(answers: Answers): string {
+  const list = asStringList(answers.climate).map((c) => c.toLowerCase());
+  if (!list.length) return PLACEHOLDER_DEFAULTS.climate;
+  if (list.length === 1) return list[0]!;
+  if (list.length === 2) return `${list[0]} and ${list[1]}`;
+  return `${list.slice(0, -1).join(", ")}, and ${list[list.length - 1]}`;
+}
+
 function fill(template: string, answers: Answers): string {
+  const location = textOr(answers.location, PLACEHOLDER_DEFAULTS.location);
+  const climate = climatePhrase(answers);
+  const style = textOr(answers.style, PLACEHOLDER_DEFAULTS.style).toLowerCase();
+  const plot = textOr(answers.plot, PLACEHOLDER_DEFAULTS.plot).toLowerCase();
+  const family = textOr(answers.family, PLACEHOLDER_DEFAULTS.family);
+  const outdoor = textOr(answers.outdoor, PLACEHOLDER_DEFAULTS.outdoor).toLowerCase();
+  const future = textOr(answers.future, PLACEHOLDER_DEFAULTS.future).toLowerCase();
+
   return template
-    .replaceAll("{location}", answers.location ?? "your city")
-    .replaceAll("{climate}", (answers.climate ?? "your climate").toLowerCase())
-    .replaceAll("{style}", (answers.style ?? "your preferred").toLowerCase())
-    .replaceAll("{plot}", (answers.plot ?? "your").toLowerCase())
-    .replaceAll("{family}", answers.family ?? "your household")
-    .replaceAll("{outdoor}", answers.outdoor ?? "occasionally")
-    .replaceAll("{future}", answers.future ?? "future change");
+    .replaceAll("{location}", location)
+    .replaceAll("{climate}", climate)
+    .replaceAll("{style}", style)
+    .replaceAll("{plot}", plot)
+    .replaceAll("{family}", family)
+    .replaceAll("{outdoor}", outdoor)
+    .replaceAll("{future}", future)
+    .replace(/\{[a-zA-Z]+\}/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }
 
 function resolveTopic(id: TopicId, answers: Answers): TopicContent {
@@ -149,74 +219,81 @@ function resolveTopic(id: TopicId, answers: Answers): TopicContent {
 }
 
 function pickTopTopic(answers: Answers): TopicId {
-  const priorities = answers.priorities ?? [];
+  const priorities = asStringList(answers.priorities);
   for (const p of priorities) {
     const mapped = priorityToTopic[p];
     if (mapped) return mapped;
   }
-  if (answers.climate) {
-    const fromClimate = climateToTopic[answers.climate];
+  for (const climate of asStringList(answers.climate)) {
+    const fromClimate = climateToTopic[climate];
     if (fromClimate) return fromClimate;
   }
-  if (answers.location === "Karachi") return "ventilation";
-  if (answers.location === "Lahore") return "orientation";
-  if (answers.location === "Islamabad") return "sunlight";
+  const location = answers.location?.trim();
+  if (location === "Karachi") return "ventilation";
+  if (location === "Lahore") return "orientation";
+  if (location === "Islamabad") return "sunlight";
   return "orientation";
 }
 
 function rankTopics(answers: Answers, top: TopicId): TopicId[] {
   const scored = new Map<TopicId, number>(topicOrder.map((id, i) => [id, topicOrder.length - i]));
   scored.set(top, 100);
-  for (const [i, p] of (answers.priorities ?? []).entries()) {
+  const priorities = asStringList(answers.priorities);
+  for (const [i, p] of priorities.entries()) {
     const id = priorityToTopic[p];
     if (id) scored.set(id, (scored.get(id) ?? 0) + 40 - i * 5);
   }
-  if (answers.climate) {
-    const id = climateToTopic[answers.climate];
-    if (id) scored.set(id, (scored.get(id) ?? 0) + 15);
+  for (const [i, climate] of asStringList(answers.climate).entries()) {
+    const id = climateToTopic[climate];
+    if (id) scored.set(id, (scored.get(id) ?? 0) + 15 - i * 2);
   }
   return [...topicOrder].sort((a, b) => (scored.get(b) ?? 0) - (scored.get(a) ?? 0));
 }
 
 function topSummary(answers: Answers, topic: TopicContent): string {
-  const place = answers.location ?? "Your location";
-  const climate = cityClimate[answers.location ?? ""] ?? cityClimate["Other"];
-  const focus = answers.climate ? answers.climate.toLowerCase() : climate;
-  return `${place}'s ${focus} makes ${topic.title.toLowerCase()} an important area to discuss during planning.`;
+  const place = textOr(answers.location, "Your location");
+  const climateKey = answers.location?.trim() ?? "";
+  const cityFocus = cityClimate[climateKey] ?? cityClimate["Other"];
+  const focus = asStringList(answers.climate).length ? climatePhrase(answers) : cityFocus;
+  return `${place}'s ${focus} makes ${topic.title.toLowerCase()} worth discussing early.`;
 }
 
 function greetingName(answers: Answers): string {
-  if (answers.location === "Karachi") return "neighbour";
-  if (answers.family?.startsWith("6")) return "family";
+  if (answers.location?.trim() === "Karachi") return "neighbour";
+  if (answers.family?.trim().startsWith("6")) return "family";
   return "there";
 }
 
+function displayValue(value: string | undefined): string {
+  return textOr(value, "—");
+}
+
 export function buildPlan(answers: Answers): BuiltPlan {
-  const topTopicId = pickTopTopic(answers);
-  const ranked = rankTopics(answers, topTopicId);
-  const topics = ranked.map((id) => resolveTopic(id, answers));
+  const safeAnswers: Answers = answers ?? {};
+  const topTopicId = pickTopTopic(safeAnswers);
+  const ranked = rankTopics(safeAnswers, topTopicId);
+  const topics = ranked.map((id) => resolveTopic(id, safeAnswers));
   const topTopic = topics.find((t) => t.id === topTopicId) ?? topics[0]!;
-  const priorities = answers.priorities?.length
-    ? answers.priorities.join(" · ")
-    : "Not set yet";
+  const priorities = formatAnswerList(safeAnswers.priorities, "Not set yet");
+  const climateFocus = formatAnswerList(safeAnswers.climate);
 
   const profileRows: Array<[string, string]> = [
-    ["Location", answers.location ?? "—"],
-    ["Project", answers.project ?? "—"],
-    ["Plot / space", answers.plot ?? "—"],
-    ["Climate focus", answers.climate ?? "—"],
-    ["Style", answers.style ?? "—"],
-    ["Family", answers.family ?? "—"],
-    ["Outdoor use", answers.outdoor ?? "—"],
-    ["Future", answers.future ?? "—"],
+    ["Location", displayValue(safeAnswers.location)],
+    ["Project", displayValue(safeAnswers.project)],
+    ["Plot / space", displayValue(safeAnswers.plot)],
+    ["Climate focus", climateFocus],
+    ["Style", displayValue(safeAnswers.style)],
+    ["Family", displayValue(safeAnswers.family)],
+    ["Outdoor use", displayValue(safeAnswers.outdoor)],
+    ["Future", displayValue(safeAnswers.future)],
     ["Top priorities", priorities],
   ];
 
   const profileStrip = [
-    answers.location,
-    answers.project,
-    answers.style,
-    answers.family,
+    safeAnswers.location?.trim(),
+    safeAnswers.project?.trim(),
+    safeAnswers.style?.trim(),
+    safeAnswers.family?.trim(),
   ]
     .filter(Boolean)
     .join(" · ");
@@ -226,25 +303,25 @@ export function buildPlan(answers: Answers): BuiltPlan {
   const planText = [
     "BuildWise — Your smarter home plan (prototype)",
     "",
-    `Location: ${answers.location ?? "—"}`,
-    `Project: ${answers.project ?? "—"}`,
-    `Plot: ${answers.plot ?? "—"}`,
-    `Climate focus: ${answers.climate ?? "—"}`,
-    `Style: ${answers.style ?? "—"}`,
-    `Family: ${answers.family ?? "—"}`,
-    `Outdoor: ${answers.outdoor ?? "—"}`,
-    `Future: ${answers.future ?? "—"}`,
+    `Location: ${displayValue(safeAnswers.location)}`,
+    `Project: ${displayValue(safeAnswers.project)}`,
+    `Plot: ${displayValue(safeAnswers.plot)}`,
+    `Climate focus: ${climateFocus}`,
+    `Style: ${displayValue(safeAnswers.style)}`,
+    `Family: ${displayValue(safeAnswers.family)}`,
+    `Outdoor: ${displayValue(safeAnswers.outdoor)}`,
+    `Future: ${displayValue(safeAnswers.future)}`,
     `Priorities: ${priorities}`,
     "",
-    "Things to discuss before you build:",
+    "Topics to discuss:",
     ...discussList.map((label, i) => `${String(i + 1).padStart(2, "0")} — ${label}`),
     "",
-    "Disclaimer: BuildWise is a prototype planning guide. It does not replace professional architectural or engineering consultation.",
+    "Disclaimer: BuildWise is a prototype. It does not replace professional advice.",
   ].join("\n");
 
   return {
-    greetingName: greetingName(answers),
-    profileStrip: profileStrip || "Complete the planner to personalise this view",
+    greetingName: greetingName(safeAnswers),
+    profileStrip: profileStrip || "Complete the planner to personalize this view",
     profileRows,
     topTopicId,
     topTitle: topTopic.cardTitle.includes(" ")
@@ -252,7 +329,7 @@ export function buildPlan(answers: Answers): BuiltPlan {
       : topTopic.id === "ventilation"
         ? "Heat & Ventilation"
         : topTopic.cardTitle,
-    topSummary: topSummary(answers, topTopic),
+    topSummary: topSummary(safeAnswers, topTopic),
     topics,
     discussList,
     planText,
@@ -260,7 +337,7 @@ export function buildPlan(answers: Answers): BuiltPlan {
 }
 
 export function getTopic(id: TopicId, answers: Answers): TopicContent {
-  return resolveTopic(id, answers);
+  return resolveTopic(id, answers ?? {});
 }
 
 export function nextTopicId(current: TopicId, plan: BuiltPlan): TopicId {

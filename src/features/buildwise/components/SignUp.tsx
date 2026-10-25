@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from "react";
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,17 +29,28 @@ export function SignUp({ onBack, onSuccess, onGoSignIn }: SignUpProps) {
   };
 
   return (
-    <main className="flex h-full min-h-full flex-1 flex-col bg-background">
-      <ScreenHeader title="Create account" onBack={onBack} />
-      <form onSubmit={submit} className="flex flex-1 flex-col px-5 pb-8 pt-6">
-        <p className="text-sm text-muted-foreground">Dummy signup for this prototype — data stays on this device.</p>
+    <main className="bw-page fade-in">
+      <ScreenHeader title="Create Account" onBack={onBack} />
+      <form onSubmit={submit} className="bw-pad-x flex flex-1 flex-col pb-10 pt-2">
+        <p className="bw-body">Enter your details to get started.</p>
+
         <div className="mt-8 space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" />
+            <Label htmlFor="name" className="text-sm font-medium">
+              Name
+            </Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your name"
+              autoComplete="name"
+            />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm font-medium">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -51,7 +61,9 @@ export function SignUp({ onBack, onSuccess, onGoSignIn }: SignUpProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm font-medium">
+              Password
+            </Label>
             <Input
               id="password"
               type="password"
@@ -62,14 +74,27 @@ export function SignUp({ onBack, onSuccess, onGoSignIn }: SignUpProps) {
             />
           </div>
         </div>
-        {error && <p className="mt-4 text-sm font-medium text-red-800">{error}</p>}
-        <div className="mt-auto flex flex-col gap-3 pt-10">
+
+        {error && (
+          <p className="mt-4 text-sm font-medium text-red-800" role="alert">
+            {error}
+          </p>
+        )}
+
+        <div className="mt-auto flex flex-col items-center gap-5 pt-12">
           <Button type="submit" size="lg" className="w-full">
-            Sign up <ArrowRight />
+            Sign up
           </Button>
-          <Button type="button" variant="ghost" size="lg" className="w-full" onClick={onGoSignIn}>
-            Already have an account? Sign in
-          </Button>
+          <p className="text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={onGoSignIn}
+              className="font-bold text-foreground underline-offset-2 hover:underline"
+            >
+              Sign in
+            </button>
+          </p>
         </div>
       </form>
     </main>

@@ -74,6 +74,43 @@ export function signOut() {
   localStorage.removeItem(SESSION_KEY);
 }
 
+export function updateProfile(input: {
+  currentEmail: string;
+  name: string;
+  email: string;
+  password?: string;
+}): { ok: true; session: Session } | { ok: false; error: string } {
+  const name = input.name.trim();
+  const email = input.email.trim().toLowerCase();
+  const currentEmail = input.currentEmail.trim().toLowerCase();
+  const password = input.password?.trim() ?? "";
+
+  if (!name || !email) return { ok: false, error: "Please fill in name and email." };
+  if (password && password.length < 4) {
+    return { ok: false, error: "Password must be at least 4 characters." };
+  }
+
+  const users = readUsers();
+  const index = users.findIndex((u) => u.email === currentEmail);
+  if (index < 0) return { ok: false, error: "Account not found." };
+
+  if (email !== currentEmail && users.some((u) => u.email === email)) {
+    return { ok: false, error: "An account with this email already exists." };
+  }
+
+  const existing = users[index]!;
+  users[index] = {
+    name,
+    email,
+    password: password || existing.password,
+  };
+  writeUsers(users);
+
+  const session = { name, email };
+  writeSession(session);
+  return { ok: true, session };
+}
+
 export function splashSeenThisSession(): boolean {
   if (typeof window === "undefined") return true;
   return sessionStorage.getItem(SPLASH_KEY) === "1";

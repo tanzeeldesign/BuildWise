@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "personalizedSummary",
+    "whyThisMatters",
+    "discussionPrompts",
+    "reviewNote"
+  ],
+  "properties": {
+    "personalizedSummary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 360
+    },
+    "whyThisMatters": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500
+    },
+    "discussionPrompts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 180
+      }
+    },
+    "reviewNote": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 220
+    }
+  }
+}

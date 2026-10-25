@@ -14,8 +14,8 @@ const tabs: Array<{ id: Tab; label: string; icon: typeof Home }> = [
 
 export function MobileTabBar({ active, onChange }: MobileTabBarProps) {
   return (
-    <nav className="shrink-0 border-t bg-background/95 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur">
-      <div className="grid grid-cols-3 gap-1">
+    <nav className="relative z-20 shrink-0 border-t border-border bg-background px-3 pb-[max(0.65rem,env(safe-area-inset-bottom))] pt-2">
+      <div className="grid grid-cols-3 gap-1.5">
         {tabs.map(({ id, label, icon: Icon }) => {
           const isActive = active === id;
           return (
@@ -23,11 +23,17 @@ export function MobileTabBar({ active, onChange }: MobileTabBarProps) {
               key={id}
               type="button"
               onClick={() => onChange(id)}
-              className={`flex flex-col items-center gap-1 rounded-lg py-2 text-[11px] font-semibold transition-colors ${
-                isActive ? "bg-accent text-primary" : "text-muted-foreground hover:text-foreground"
+              aria-current={isActive ? "page" : undefined}
+              className={`flex flex-col items-center gap-1 rounded-2xl py-2.5 text-[11px] font-semibold transition-colors duration-200 ${
+                isActive
+                  ? "text-primary"
+                  : "text-muted-foreground active:bg-muted/70"
               }`}
             >
-              <Icon className="size-5" strokeWidth={isActive ? 2.25 : 1.75} />
+              <Icon
+                className={`size-5 ${isActive ? "text-primary" : ""}`}
+                strokeWidth={isActive ? 2.25 : 1.75}
+              />
               {label}
             </button>
           );

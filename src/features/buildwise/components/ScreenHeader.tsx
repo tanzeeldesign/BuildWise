@@ -11,24 +11,30 @@ type ScreenHeaderProps = {
 export function ScreenHeader({ title, onBack, right, inverse }: ScreenHeaderProps) {
   return (
     <header
-      className={`flex h-14 shrink-0 items-center justify-between gap-3 border-b px-4 ${
-        inverse ? "border-background/15 bg-foreground text-background" : "bg-background"
+      className={`sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between gap-3 border-b px-5 backdrop-blur-xl ${
+        inverse
+          ? "border-background/15 bg-foreground/90 text-background"
+          : "border-border/80 bg-background/90"
       }`}
     >
-      <div className="flex min-w-0 items-center gap-2">
+      <div className="flex min-w-0 items-center gap-3">
         {onBack && (
           <button
             type="button"
             onClick={onBack}
             aria-label="Back"
-            className={`grid size-10 place-items-center rounded-md transition-colors ${
-              inverse ? "hover:bg-background/10" : "hover:bg-muted"
+            className={`bw-back ${
+              inverse
+                ? "border-background/25 bg-background/10 text-background hover:bg-background/15"
+                : ""
             }`}
           >
-            <ArrowLeft className="size-5" />
+            <ArrowLeft className="size-[18px]" strokeWidth={2} />
           </button>
         )}
-        {title && <h1 className="truncate text-base font-semibold">{title}</h1>}
+        {title && (
+          <h1 className="truncate text-lg font-bold leading-tight tracking-tight">{title}</h1>
+        )}
       </div>
       {right}
     </header>
